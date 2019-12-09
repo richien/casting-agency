@@ -1,0 +1,12 @@
+[report]
+show_missing=True
+omit =
+    */python?.?/*
+    */site-packages/*
+    */__pycache__/*
+    *.pyc
+    */usr/lib/python3/*
+    */__init__.py
+    */.pytest_cache/*
+    */tests/*
+    *~/.local/share/virtualenvs/*

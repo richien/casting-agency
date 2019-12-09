@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.pytest_cache
 
 # Unit test / coverage reports
 htmlcov/
@@ -8,4 +9,7 @@ htmlcov/
 # Environments
 .env
 env/
+Pipfile
 
+# IDE
+.vscode
