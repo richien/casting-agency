@@ -10,7 +10,7 @@ class MoviesTestCase(unittest.TestCase):
         """Define test variables and initialize app"""
         self.app = app
         self.client = self.app.test_client
-    
+
     def test_get_movies(self):
         movies = [{'name': 'The Hatchet'}]
 

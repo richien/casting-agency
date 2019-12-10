@@ -3,16 +3,27 @@ from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
 
+from .models import setup_db
+
 
 app = Flask(__name__)
-APP_ROOT = os.path.join(os.path.dirname(__file__), '..')
+
+# Setup CORS
+CORS(app)
 
 # Load environment variables
+APP_ROOT = os.path.join(os.path.dirname(__file__), '..')
 dotenv_path = os.path.join(APP_ROOT, '.env')
 load_dotenv(dotenv_path)
 
+# Setup the database
+setup_db(app)
+
 # Set the API prefix
 api_url_prefix = '/api/v1'
+
+# Import error handlers
+from . import errors
 
 # Register blueprints for routes
 from .actors.views import actors

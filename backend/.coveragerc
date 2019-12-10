@@ -10,3 +10,4 @@ omit =
     */.pytest_cache/*
     */tests/*
     *~/.local/share/virtualenvs/*
+    */env/*
