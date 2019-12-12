@@ -27,7 +27,8 @@ class ActorsTestCase(unittest.TestCase):
 
     def tearDown(self):
         with self.app.app_context():
-            self.actor.delete()
+            self.db.session.query(Actor).delete()
+            self.db.session.commit()
 
     def test_get_actors_with_successful_response(self):
         actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
@@ -58,6 +59,7 @@ class ActorsTestCase(unittest.TestCase):
         response = self.client().get(f'/api/v1/actors/{self.actor_id}')
         data = json.loads(response.data)
 
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
         self.assertEqual(data['actor']['name'], actor['name'])
         self.assertEqual(data['actor']['age'], actor['age'])
@@ -72,3 +74,33 @@ class ActorsTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 404)
         self.assertEqual(data['message'], 'resource not found')
+
+    def test_add_actor_with_successfull_response(self):
+        actor = {'name': 'Jane Vanfon', 'age': 28, 'gender': 'female'}
+
+        response = self.client().post(
+            '/api/v1/actors',
+            content_type='application/json',
+            data=json.dumps(actor))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['actor']['name'], actor['name'])
+        self.assertEqual(data['actor']['age'], actor['age'])
+        self.assertEqual(data['actor']['gender'], actor['gender'])
+
+    def test_add_actor_with_failure_response(self):
+        # actor with missing field in request body
+        actor = {'name': 'Jane Vanfon', 'gender': 'female'}
+
+        response = self.client().post(
+            '/api/v1/actors',
+            content_type='application/json',
+            data=json.dumps(actor))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
