@@ -186,3 +186,40 @@ DELETE /actors/<int:id>
 - If an actor with the supplied ID doesn't exist in the database, a 422 error response is returned.
  Checkout the section on [error handling](#error-handling) above for the structure of the error response.
 
+
+```
+GET /movies
+```
+
+- General
+    - Returns a list of movie objects, the total number of movies in the database and a success value of true.
+    - Results are paginated in groups of 10 by default. Include a **page** request argument to choose
+        a page number, starting from 1. If no argument is supplied the default page is page 1.
+    - You can also optionally specify a **limit** request argument to change the number or returned questions
+    in the pagination group.
+
+- Request Arguments: 
+    - `page` integer [optional - defaults to 1]
+    - `limit` integer [optional - defaults to 10]
+
+- Sample: ``` curl http://localhost:5000/api/v1/movies?page=1``` `TODO Use the heroku url`
+```
+{
+  "movies": [
+    {
+      "id": 1,
+      "release-date": "Friday, 11 December 2020",
+      "title": "The Hatchet"
+    }
+  ],
+  "success": true,
+  "total_movies": 1
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 404
+- If there are no movies in the database for the requested page, a `404` error response
+  will be returned.
+Checkout the section on [error handling](#error-handling) above for the structure of the error response.
