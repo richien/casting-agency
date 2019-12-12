@@ -134,6 +134,7 @@ PATCH /actors/<int:id>
 ```
 
 - General
+    - Updates the supplied fields for the actor object with the given ID.
     - Takes a json object containing any of the fields; name, age and gender in the request body.
     - Returns an actor object and a success value of true.
 
@@ -157,6 +158,31 @@ PATCH /actors/<int:id>
   - success: 200
   - error: 400, 422
 - If there are validation errors in the request, a 400 error response is returned.
+- If an actor with the supplied ID doesn't exist in the database, a 422 error response is returned.
+ Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+```
+DELETE /actors/<int:id>
+```
+
+- General
+    - Deletes the actor object with the given ID.
+    - Returns the ID of the deleted actor object and a success value of true.
+
+- Request Arguments: 
+    - None
+
+- Sample: ```curl -X DELETE http://localhost:5000/api/v1/actors/2``` `TODO Use the heroku url`
+```
+{
+  "deleted": 2,
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 422
 - If an actor with the supplied ID doesn't exist in the database, a 422 error response is returned.
  Checkout the section on [error handling](#error-handling) above for the structure of the error response.
 

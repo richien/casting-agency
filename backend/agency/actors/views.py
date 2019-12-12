@@ -77,3 +77,18 @@ def edit_actor(id):
             }), 200
     except Exception as error:
         raise error
+
+
+@actors.route('/actors/<int:id>', methods=['DELETE'])
+def delete_actor(id):
+    try:
+        actor = Actor.query.get(id)
+        if not actor:
+            abort(422)
+        actor.delete()
+        return jsonify({
+                'success': True,
+                'deleted': actor.id
+            }), 200
+    except Exception as error:
+        raise error

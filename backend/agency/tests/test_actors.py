@@ -43,7 +43,7 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(actor['gender'], data['actors'][0]['gender'])
         self.assertEqual(data['total_actors'], 1)
 
-    def test_get_actors_with_failure_response(self):
+    def test_get_actors_with_invalid_page_number(self):
         page = 100  # This page doesn't exist
         response = self.client().get(f'/api/v1/actors?page={page}')
         data = json.loads(response.data)
@@ -65,7 +65,7 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(data['actor']['age'], actor['age'])
         self.assertEqual(data['actor']['gender'], actor['gender'])
 
-    def test_get_actor_with_failure_response(self):
+    def test_get_actor_with_invalid_actor_id(self):
         actor_id = 0  # This actor ID doesn't exist
         response = self.client().get(f'/api/v1/actors/{actor_id}')
         data = json.loads(response.data)
@@ -135,7 +135,7 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(data['error'], 400)
         self.assertEqual(data['message'], 'bad request')
 
-    def test_edit_actor_with_invalid_actor_id_in_request_body(self):
+    def test_edit_actor_with_invalid_actor_id_in_request(self):
         actor = {'name': 'James Peters'}
         actor_id = 0  # This actor ID doesn't exist
 
@@ -163,3 +163,23 @@ class ActorsTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 400)
         self.assertEqual(data['message'], 'bad request')
+
+    def test_delete_actor_with_successfull_response(self):
+
+        response = self.client().delete(f'/api/v1/actors/{self.actor_id}')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['deleted'], self.actor_id)
+
+    def test_delete_actor_with_invalid_actor_id(self):
+        actor_id = 0  # This actor ID doesn't exist
+
+        response = self.client().delete(f'/api/v1/actors/{actor_id}')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 422)
+        self.assertEqual(data['message'], 'unable to process request')
