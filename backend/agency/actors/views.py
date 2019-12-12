@@ -1,7 +1,8 @@
 import json
 from flask import Blueprint, jsonify, abort, request
+
 from ..models import Actor
-from .helpers import isValidActor
+from .helpers import isValidPostRequest, isValidPatchRequest
 
 
 actors = Blueprint('actors', __name__)
@@ -46,7 +47,7 @@ def retrieve_actor(id):
 def add_actor():
     try:
         data = json.loads(request.data)
-        if not isValidActor(data):
+        if not isValidPostRequest(data):
             abort(400)
         actor = Actor(**data)
         actor.insert()
@@ -54,5 +55,25 @@ def add_actor():
                 'success': True,
                 'actor': actor.format()
             }), 201
+    except Exception as error:
+        raise error
+
+
+@actors.route('/actors/<int:id>', methods=['PATCH'])
+def edit_actor(id):
+    try:
+        actor = Actor.query.get(id)
+        if not actor:
+            abort(422)
+        data = json.loads(request.data)
+        if not isValidPatchRequest(data):
+            abort(400)
+        for key, value in data.items():
+            setattr(actor, key, value)
+        actor.update()
+        return jsonify({
+                'success': True,
+                'actor': actor.format()
+            }), 200
     except Exception as error:
         raise error

@@ -21,9 +21,9 @@ class Actor(db.Model):
     __tablename__ = 'actors'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, nullable=False)
     age = Column(Integer)
-    gender = Column(String)
+    gender = Column(String, nullable=False)
 
     def __init__(self, name, age, gender):
         self.name = name

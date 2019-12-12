@@ -91,11 +91,70 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(data['actor']['gender'], actor['gender'])
 
     def test_add_actor_with_failure_response(self):
-        # actor with missing field in request body
+        # request with missing field in request body
         actor = {'name': 'Jane Vanfon', 'gender': 'female'}
 
         response = self.client().post(
             '/api/v1/actors',
+            content_type='application/json',
+            data=json.dumps(actor))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
+
+    def test_edit_actor_with_successfull_response(self):
+        actor = {'name': 'James Peters'}
+
+        response = self.client().patch(
+            f'/api/v1/actors/{self.actor_id}',
+            content_type='application/json',
+            data=json.dumps(actor))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['actor']['name'], actor['name'])
+        self.assertEqual(data['actor']['age'], self.actor.age)
+        self.assertEqual(data['actor']['gender'], self.actor.gender)
+
+    def test_edit_actor_with_invalid_key_in_request_body(self):
+        # request with invalid key 'names' in request body
+        actor = {'names': 'James Peters'}
+
+        response = self.client().patch(
+            f'/api/v1/actors/{self.actor_id}',
+            content_type='application/json',
+            data=json.dumps(actor))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
+
+    def test_edit_actor_with_invalid_actor_id_in_request_body(self):
+        actor = {'name': 'James Peters'}
+        actor_id = 0  # This actor ID doesn't exist
+
+        response = self.client().patch(
+            f'/api/v1/actors/{actor_id}',
+            content_type='application/json',
+            data=json.dumps(actor))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 422)
+        self.assertEqual(data['message'], 'unable to process request')
+
+    def test_edit_actor_with_empty_string_in_request_body(self):
+        actor = {'name': ''}
+
+        response = self.client().patch(
+            f'/api/v1/actors/{self.actor_id}',
             content_type='application/json',
             data=json.dumps(actor))
         data = json.loads(response.data)

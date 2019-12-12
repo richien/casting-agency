@@ -20,6 +20,15 @@ def bad_request(error):
     }), 400
 
 
+@app.errorhandler(422)
+def unprocessable(error):
+    return jsonify({
+        'success': False,
+        'error': 422,
+        'message': 'unable to process request'
+    }), 422
+
+
 @app.errorhandler(405)
 def not_allowed(error):
     return jsonify({
