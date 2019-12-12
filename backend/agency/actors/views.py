@@ -23,3 +23,17 @@ def retrieve_actors():
             }), 200
     except Exception as error:
         raise error
+
+
+@actors.route('/actors/<int:id>', methods=['GET'])
+def retrieve_actor(id):
+    try:
+        actor = Actor.query.get(id)
+        if not actor:
+            abort(404)
+        return jsonify({
+                'success': True,
+                'actor': actor.format()
+            }), 200
+    except Exception as error:
+        raise error

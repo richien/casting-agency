@@ -15,6 +15,7 @@ class ActorsTestCase(unittest.TestCase):
         self.client = self.app.test_client
         database_path = os.getenv('TEST_DATABASE_URI')
         setup_db(self.app, database_path)
+        self.actor_id = ''
         with self.app.app_context():
             self.db = SQLAlchemy()
             self.db.init_app(self.app)
@@ -22,6 +23,7 @@ class ActorsTestCase(unittest.TestCase):
             # Add an actor
             self.actor = Actor(name="James Doe", age=23, gender="male")
             self.actor.insert()
+            self.actor_id = self.actor.id
 
     def tearDown(self):
         with self.app.app_context():
@@ -43,6 +45,27 @@ class ActorsTestCase(unittest.TestCase):
     def test_get_actors_with_failure_response(self):
         page = 100  # This page doesn't exist
         response = self.client().get(f'/api/v1/actors?page={page}')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 404)
+        self.assertEqual(data['message'], 'resource not found')
+
+    def test_get_actor_with_successfull_response(self):
+        actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
+
+        response = self.client().get(f'/api/v1/actors/{self.actor_id}')
+        data = json.loads(response.data)
+
+        self.assertTrue(data['success'])
+        self.assertEqual(data['actor']['name'], actor['name'])
+        self.assertEqual(data['actor']['age'], actor['age'])
+        self.assertEqual(data['actor']['gender'], actor['gender'])
+
+    def test_get_actor_with_failure_response(self):
+        actor_id = 0  # This actor ID doesn't exist
+        response = self.client().get(f'/api/v1/actors/{actor_id}')
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 404)

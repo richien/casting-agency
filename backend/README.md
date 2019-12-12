@@ -36,6 +36,7 @@ This will install all of the required packages within the `requirements.txt` fil
 
 ## Database Setup
 From within the PostgreSQL shell, run the following commands to create the following databases
+`-TODO- Running migrations? OR Restore Database from agency.sql file?`
 ```bash
 CREATE DATABASE agency
 ```

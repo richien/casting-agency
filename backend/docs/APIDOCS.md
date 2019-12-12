@@ -67,6 +67,35 @@ GET /actors
   - error: 404
 - If there are no actors in the database for the requested page, a `404` error response
   will be returned. Checkout the section on [error handling](#error-handling) above for the structure of the response.
+
+```
+GET /actors/<int:id>
+```
+
+- General
+    - Returns an actor object with the given ID.
+
+- Request Arguments: 
+    - None
+
+- Sample: ``` curl http://localhost:5000/api/v1/actors/1``` `TODO Use the heroku url`
+```
+{
+  "actor": {
+    "age": 23,
+    "gender": "Male",
+    "id": 1,
+    "name": "James Henry Jones"
+  },
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 404
+- If an actor with the supplied ID does not exist in the database, a `404` error response
+  will be returned. Checkout the section on [error handling](#error-handling) above for the structure of the response.
   
 
 
