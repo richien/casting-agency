@@ -158,3 +158,71 @@ class MoviesTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 400)
         self.assertEqual(data['message'], 'bad request')
+
+    def test_edit_movie_with_successfull_response(self):
+        release_date = datetime(2020, 2, 9)
+        movie = {
+            'release-date': release_date.isoformat()
+        }
+
+        response = self.client().patch(
+                        f'/api/v1/movies/{self.movie_id}',
+                        content_type='application/json',
+                        data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['movie']['id'], self.movie_id)
+        self.assertEqual(data['movie']['release-date'], movie['release-date'])
+
+    def test_edit_movie_with_invalid_movie_id(self):
+        movie_id = 0  # invalid movie ID
+        release_date = datetime(2020, 2, 9)
+        movie = {
+            'release-date': release_date.isoformat()
+        }
+
+        response = self.client().patch(
+                        f'/api/v1/movies/{movie_id}',
+                        content_type='application/json',
+                        data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 422)
+        self.assertEqual(data['message'], 'unable to process request')
+
+    def test_edit_movie_with_empty_title_string(self):
+        movie = {
+            'title': ''
+        }
+
+        response = self.client().patch(
+                        f'/api/v1/movies/{self.movie_id}',
+                        content_type='application/json',
+                        data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
+
+    def test_edit_movie_with_invalid_date(self):
+        release_date = '2020-13-01'  # date with invalid month 13
+        movie = {
+            'release-date': release_date
+        }
+
+        response = self.client().patch(
+                        f'/api/v1/movies/{self.movie_id}',
+                        content_type='application/json',
+                        data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')

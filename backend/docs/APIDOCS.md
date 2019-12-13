@@ -197,7 +197,7 @@ GET /movies
         a page number, starting from 1. If no argument is supplied the default page is page 1.
     - You can also optionally specify a **limit** request argument to change the number or returned questions
     in the pagination group.
-    - The release date is retuned in ISO format.
+    - The release date is returned in ISO format.
 
 - Request Arguments: 
     - `page` integer [optional - defaults to 1]
@@ -260,7 +260,7 @@ POST /movies
 ```
 
 - General
-    - Takes a json object containing an actor's name, age and gender in the request body.
+    - Takes a json object containing a movie's title, release-date (in ISO format) in the request body.
     - Returns an actor object and a success value of true.
 
 - Request Arguments: 
@@ -283,3 +283,34 @@ POST /movies
   - error: 400
 - If there are validation errors in the request, a 400 error response is returned.
 Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+```
+PATCH /movies/<int:id>
+```
+
+- General
+    - Updates the supplied fields for the movie object with the given ID.
+    - Takes a json object containing any of the fields; title, release-date (in ISO format) in the request body.
+    - Returns an actor object and a success value of true.
+
+- Request Arguments: 
+    - None
+
+- Sample: ```curl -X PATCH http://localhost:5000/api/v1/movies/9 -H "content-type:application/json" -d '{"title": "Elevated", "release-date": "2020-03-01"}'``` `TODO Use the heroku url`
+```
+{
+  "movie": {
+    "id": 9,
+    "release-date": "2020-03-01T00:00:00",
+    "title": "Elevated"
+  },
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 400, 422
+- If there are validation errors in the request, a 400 error response is returned.
+- If an actor with the supplied ID doesn't exist in the database, a 422 error response is returned.
+ Checkout the section on [error handling](#error-handling) above for the structure of the error response.

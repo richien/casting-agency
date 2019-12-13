@@ -13,9 +13,11 @@ def isValidPostRequest(data):
             break
         if field == 'title' and data[field] == '':
             isValid = False
+            break
         if field == 'release-date'and not isValidDateString(
-                                            data['release-date']):
+                                            data[field]):
             isValid = False
+            break
     return isValid
 
 
@@ -39,3 +41,23 @@ def reformat(data):
         'release_date': datetime.fromisoformat(data['release-date'])
     }
     return reformatted_data
+
+
+def isValidPatchRequest(data):
+    updateable_fields = [
+        'title',
+        'release-date'
+    ]
+    isValid = True
+    for field in data.keys():
+        if field not in updateable_fields:
+            isValid = False
+            break
+        if field == 'release-date' and not isValidDateString(
+                                                data[field]):
+            isValid = False
+            break
+        if field == 'title' and data[field] == '':
+            isValid = False
+            break
+    return isValid

@@ -2,7 +2,7 @@ import json
 from flask import Blueprint, jsonify, request, abort
 
 from ..models import Movie
-from .helpers import isValidPostRequest, reformat
+from .helpers import isValidPostRequest, reformat, isValidPatchRequest
 
 
 movies = Blueprint('movies', __name__)
@@ -56,5 +56,29 @@ def add_movie():
             'success': True,
             'movie': movie.format()
         }), 201
+    except Exception as error:
+        raise error
+
+
+@movies.route('/movies/<int:id>', methods=['PATCH'])
+def edit_movie(id):
+    try:
+        movie = Movie.query.get(id)
+        if not movie:
+            abort(422)
+        data = json.loads(request.data)
+        if not isValidPatchRequest(data):
+            abort(400)
+        for key, value in data.items():
+            # if the key is'release-date', reformat the key to 'release_date'
+            # which is the correct Movie attribute.
+            if key == 'release-date':
+                key = 'release_date'
+            setattr(movie, key, value)
+        movie.update()
+        return jsonify({
+            'success': True,
+            'movie': movie.format()
+        }), 200
     except Exception as error:
         raise error
