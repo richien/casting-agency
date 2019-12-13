@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import Column, String, Integer, Date
+from sqlalchemy import Column, String, Integer, DateTime
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -22,7 +22,7 @@ class Actor(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    age = Column(Integer)
+    age = Column(Integer, nullable=False)
     gender = Column(String, nullable=False)
 
     def __init__(self, name, age, gender):
@@ -55,7 +55,7 @@ class Movie(db.Model):
 
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
-    release_date = Column(Date)
+    release_date = Column(DateTime, nullable=False)
 
     def __init__(self, title, release_date):
         self.title = title
@@ -76,5 +76,5 @@ class Movie(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'release-date': self.release_date.strftime("%A, %d %B %Y")
+            'release-date': self.release_date.isoformat()
         }

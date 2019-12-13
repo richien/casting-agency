@@ -1,6 +1,8 @@
+import json
 from flask import Blueprint, jsonify, request, abort
 
 from ..models import Movie
+from .helpers import isValidPostRequest, reformat
 
 
 movies = Blueprint('movies', __name__)
@@ -38,4 +40,21 @@ def retrieve_movie(id):
                 'movie': movie.format()
             }), 200
     except Exception as error:
-        raise(error)
+        raise error
+
+
+@movies.route('/movies', methods=['POST'])
+def add_movie():
+    try:
+        data = json.loads(request.data)
+        if not isValidPostRequest(data):
+            abort(400)
+        data = reformat(data)
+        movie = Movie(**data)
+        movie.insert()
+        return jsonify({
+            'success': True,
+            'movie': movie.format()
+        }), 201
+    except Exception as error:
+        raise error

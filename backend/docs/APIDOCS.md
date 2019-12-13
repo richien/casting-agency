@@ -197,6 +197,7 @@ GET /movies
         a page number, starting from 1. If no argument is supplied the default page is page 1.
     - You can also optionally specify a **limit** request argument to change the number or returned questions
     in the pagination group.
+    - The release date is retuned in ISO format.
 
 - Request Arguments: 
     - `page` integer [optional - defaults to 1]
@@ -208,7 +209,7 @@ GET /movies
   "movies": [
     {
       "id": 1,
-      "release-date": "Friday, 11 December 2020",
+      "release-date": "2020-12-11T00:00:00",
       "title": "The Hatchet"
     }
   ],
@@ -230,6 +231,7 @@ GET /movies/<int:id>
 
 - General
     - Returns an movie object with the given ID and a success value of true.
+    - The release date is retuned in ISO format
 
 - Request Arguments: 
     - None
@@ -239,7 +241,7 @@ GET /movies/<int:id>
 {
   "movie": {
     "id": 1,
-    "release-date": "Friday, 11 December 2020",
+    "release-date": "2020-12-11T00:00:00",
     "title": "The Hatchet"
   },
   "success": true
@@ -251,4 +253,33 @@ GET /movies/<int:id>
   - error: 404
 - If a movie with the supplied ID does not exist in the database, a `404` error response
   will be returned.
+Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+```
+POST /movies
+```
+
+- General
+    - Takes a json object containing an actor's name, age and gender in the request body.
+    - Returns an actor object and a success value of true.
+
+- Request Arguments: 
+    - None
+
+- Sample: ```curl -X POST http://localhost:5000/api/v1/movies -H "content-type:application/json" -d '{"title": "A Sudden Rise", "release-date": "2020-10-10T15:00:00"}'``` `TODO Use the heroku url`
+```
+{
+  "movie": {
+    "id": 9,
+    "release-date": "2020-10-10T15:00:00",
+    "title": "A Sudden Rise"
+  },
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 201
+  - error: 400
+- If there are validation errors in the request, a 400 error response is returned.
 Checkout the section on [error handling](#error-handling) above for the structure of the error response.

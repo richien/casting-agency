@@ -2,7 +2,7 @@ import os
 import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
-from datetime import date
+from datetime import datetime
 
 from agency import app
 from agency.models import setup_db, Movie
@@ -24,7 +24,7 @@ class MoviesTestCase(unittest.TestCase):
             # Add a movie
             self.movie = Movie(
                 title='The Hatchet',
-                release_date=date(2020, 12, 11)
+                release_date=datetime(2020, 12, 11)
             )
             self.movie.insert()
             self.movie_id = self.movie.id
@@ -35,10 +35,10 @@ class MoviesTestCase(unittest.TestCase):
             self.db.session.commit()
 
     def test_get_movies_with_successfull_response(self):
-        release_date = date(2020, 12, 11)
+        release_date = datetime(2020, 12, 11)
         movie = {
             'title': 'The Hatchet',
-            'release-date': release_date.strftime("%A, %d %B %Y")
+            'release-date': release_date.isoformat()
         }
 
         response = self.client().get('/api/v1/movies?page=1')
@@ -63,11 +63,11 @@ class MoviesTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'resource not found')
 
     def test_get_movie_with_successfull_response(self):
-        release_date = date(2020, 12, 11)
+        release_date = datetime(2020, 12, 11)
         movie = {
             'id': self.movie_id,
             'title': 'The Hatchet',
-            'release-date': release_date.strftime("%A, %d %B %Y")
+            'release-date': release_date.isoformat()
         }
 
         response = self.client().get(f'/api/v1/movies/{self.movie_id}')
@@ -87,3 +87,74 @@ class MoviesTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 404)
         self.assertEqual(data['message'], 'resource not found')
+
+    def test_add_movie_with_successfull_response(self):
+        release_date = datetime(2020, 2, 9)
+        movie = {
+            'title': 'Above The Storm',
+            'release-date': release_date.isoformat()
+        }
+
+        response = self.client().post(
+                    '/api/v1/movies',
+                    content_type='application/json',
+                    data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['movie']['title'], movie['title'])
+        self.assertEqual(data['movie']['release-date'], movie['release-date'])
+
+    def test_add_movie_with_invalid_date_string(self):
+        release_date = "2020-13-01T00:00:00"  # invalid month 13 in date
+        movie = {
+            'title': 'Above The Storm',
+            'release-date': release_date
+        }
+
+        response = self.client().post(
+                    'api/v1/movies',
+                    content_type='application/json',
+                    data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
+
+    def test_add_movie_with_empty_title_string(self):
+        release_date = datetime(2020, 2, 9)
+        movie = {
+            'title': '',
+            'release-date': release_date.isoformat()
+        }
+
+        response = self.client().post(
+                    'api/v1/movies',
+                    content_type='application/json',
+                    data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
+
+    def test_add_movie_with_missing_title_string(self):
+        release_date = datetime(2020, 2, 9)
+        movie = {
+            'release-date': release_date.isoformat()
+        }
+
+        response = self.client().post(
+                    'api/v1/movies',
+                    content_type='application/json',
+                    data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
