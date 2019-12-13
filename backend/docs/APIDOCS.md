@@ -223,3 +223,32 @@ GET /movies
 - If there are no movies in the database for the requested page, a `404` error response
   will be returned.
 Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+```
+GET /movies/<int:id>
+```
+
+- General
+    - Returns an movie object with the given ID and a success value of true.
+
+- Request Arguments: 
+    - None
+
+- Sample: ``` curl http://localhost:5000/api/v1/movies/1``` `TODO Use the heroku url`
+```
+{
+  "movie": {
+    "id": 1,
+    "release-date": "Friday, 11 December 2020",
+    "title": "The Hatchet"
+  },
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 404
+- If a movie with the supplied ID does not exist in the database, a `404` error response
+  will be returned.
+Checkout the section on [error handling](#error-handling) above for the structure of the error response.

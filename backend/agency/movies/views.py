@@ -25,3 +25,17 @@ def retrieve_movies():
             }), 200
     except Exception as error:
         raise error
+
+
+@movies.route('/movies/<int:id>', methods=['GET'])
+def retrieve_movie(id):
+    try:
+        movie = Movie.query.get(id)
+        if not movie:
+            abort(404)
+        return jsonify({
+                'success': True,
+                'movie': movie.format()
+            }), 200
+    except Exception as error:
+        raise(error)

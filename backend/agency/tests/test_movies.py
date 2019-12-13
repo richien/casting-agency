@@ -61,3 +61,29 @@ class MoviesTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 404)
         self.assertEqual(data['message'], 'resource not found')
+
+    def test_get_movie_with_successfull_response(self):
+        release_date = date(2020, 12, 11)
+        movie = {
+            'id': self.movie_id,
+            'title': 'The Hatchet',
+            'release-date': release_date.strftime("%A, %d %B %Y")
+        }
+
+        response = self.client().get(f'/api/v1/movies/{self.movie_id}')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertEqual(data['movie'], movie)
+
+    def test_get_movie_with_invalid_movie_id(self):
+        movie_id = 0  # invalid movie ID
+
+        response = self.client().get(f'/api/v1/movies/{movie_id}')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 404)
+        self.assertEqual(data['message'], 'resource not found')
