@@ -82,3 +82,18 @@ def edit_movie(id):
         }), 200
     except Exception as error:
         raise error
+
+
+@movies.route('/movies/<int:id>', methods=['DELETE'])
+def delete_movie(id):
+    try:
+        movie = Movie.query.get(id)
+        if not movie:
+            abort(422)
+        movie.delete()
+        return jsonify({
+            'success': True,
+            'deleted': id
+        }), 200
+    except Exception as error:
+        raise error

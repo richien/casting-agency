@@ -226,3 +226,41 @@ class MoviesTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 400)
         self.assertEqual(data['message'], 'bad request')
+
+    def test_edit_movie_with_invalid_field(self):
+        release_date = '2020-13-01'
+        # 'release-dates' is an invalid field
+        movie = {
+            'release-dates': release_date
+        }
+
+        response = self.client().patch(
+                        f'/api/v1/movies/{self.movie_id}',
+                        content_type='application/json',
+                        data=json.dumps(movie))
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 400)
+        self.assertEqual(data['message'], 'bad request')
+
+    def test_delete_movie_with_success_response(self):
+
+        response = self.client().delete(f'/api/v1/movies/{self.movie_id}')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('success')
+        self.assertEqual(data['deleted'], self.movie_id)
+
+    def test_delete_movie_with_invalid_id(self):
+        movie_id = 0  # invalid movie_id
+
+        response = self.client().delete(f'/api/v1/movies/{movie_id}')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 422)
+        self.assertEqual(data['message'], 'unable to process request')

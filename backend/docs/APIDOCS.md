@@ -39,7 +39,7 @@ GET /actors
     - Returns a list of actor objects, the total number of actors in the database and a success value of true.
     - Results are paginated in groups of 10 by default. Include a **page** request argument to choose
         a page number, starting from 1. If no argument is supplied the default page is page 1.
-    - You can also optionally specify a **limit** request argument to change the number or returned questions
+    - You can also optionally specify a **limit** request argument to change the number or returned actors
     in the pagination group.
 
 - Request Arguments: 
@@ -195,7 +195,7 @@ GET /movies
     - Returns a list of movie objects, the total number of movies in the database and a success value of true.
     - Results are paginated in groups of 10 by default. Include a **page** request argument to choose
         a page number, starting from 1. If no argument is supplied the default page is page 1.
-    - You can also optionally specify a **limit** request argument to change the number or returned questions
+    - You can also optionally specify a **limit** request argument to change the number or returned movies
     in the pagination group.
     - The release date is returned in ISO format.
 
@@ -230,8 +230,8 @@ GET /movies/<int:id>
 ```
 
 - General
-    - Returns an movie object with the given ID and a success value of true.
-    - The release date is retuned in ISO format
+    - Returns a movie object with the given ID and a success value of true.
+    - The release date is returned in ISO format
 
 - Request Arguments: 
     - None
@@ -261,7 +261,7 @@ POST /movies
 
 - General
     - Takes a json object containing a movie's title, release-date (in ISO format) in the request body.
-    - Returns an actor object and a success value of true.
+    - Returns a movie object and a success value of true.
 
 - Request Arguments: 
     - None
@@ -291,7 +291,7 @@ PATCH /movies/<int:id>
 - General
     - Updates the supplied fields for the movie object with the given ID.
     - Takes a json object containing any of the fields; title, release-date (in ISO format) in the request body.
-    - Returns an actor object and a success value of true.
+    - Returns a movie object and a success value of true.
 
 - Request Arguments: 
     - None
@@ -312,5 +312,30 @@ PATCH /movies/<int:id>
   - success: 200
   - error: 400, 422
 - If there are validation errors in the request, a 400 error response is returned.
-- If an actor with the supplied ID doesn't exist in the database, a 422 error response is returned.
+- If a movie with the supplied ID doesn't exist in the database, a 422 error response is returned.
+ Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+ ```
+DELETE /movies/<int:id>
+```
+
+- General
+    - Deletes the movie object with the given ID.
+    - Returns the ID of the deleted movie object and a success value of true.
+
+- Request Arguments: 
+    - None
+
+- Sample: ```curl -X DELETE http://localhost:5000/api/v1/movies/9``` `TODO Use the heroku url`
+```
+{
+  "deleted": 9,
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 422
+- If a movie with the supplied ID doesn't exist in the database, a 422 error response is returned.
  Checkout the section on [error handling](#error-handling) above for the structure of the error response.
