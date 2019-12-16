@@ -87,6 +87,10 @@ class Movie(db.Model):
         self.actors.append(actor)
         db.session.commit()
 
+    def delete_actor(self, actor):
+        self.actors.remove(actor)
+        db.session.commit()
+
     def format(self):
         return {
             'id': self.id,

@@ -63,7 +63,7 @@ def isValidPatchRequest(data):
     return isValid
 
 
-def isValidPostActorRequest(data):
+def isValidActorId(data):
     isValid = True
     if 'actor-id' not in data.keys() or data['actor-id'] == '':
         isValid = False

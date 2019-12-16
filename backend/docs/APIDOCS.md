@@ -347,7 +347,7 @@ PATCH /movies/<int:id>
 - If a movie with the supplied ID doesn't exist in the database, a 422 error response is returned.
  Checkout the section on [error handling](#error-handling) above for the structure of the error response.
 
- ```
+```
 DELETE /movies/<int:id>
 ```
 
@@ -434,5 +434,34 @@ POST /movies/<int:id>/actors
   - error: 400, 404, 422
 - If there are validation errors in the request, a 400 error response is returned.
 - If a movie with the given movie ID does not exist, a 404 error response is returned.
-- If an actor with the given actor ID does not exist, a 422 error response is returned.
+- If an actor with the given actor ID does not exist or is already assigned to the movie, a 422 error response is returned.
 Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+
+```
+DELETE /movies/<int:id>/actors
+```
+
+- General
+    - Takes a json object containing an actor's ID in the request body.
+    - Deletes the actor object with the given actor ID.
+    - Returns the ID of the deleted actor object and a success value of true.
+
+- Request Arguments: 
+    - None
+
+- Sample: ```curl -X DELETE http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -d '{"actor-id": 4}'``` `TODO Use the heroku url`
+```
+{
+  "deleted": 4,
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 422
+- If there are validation errors in the request, a 400 error response is returned.
+- If a movie with the given movie ID does not exist, a 404 error response is returned.
+- If an actor with the given actor ID does not exist or is not yet assigned to the movie, a 422 error response is returned.
+ Checkout the section on [error handling](#error-handling) above for the structure of the error response.

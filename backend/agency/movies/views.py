@@ -6,7 +6,7 @@ from .helpers import (
     isValidPostRequest,
     reformat,
     isValidPatchRequest,
-    isValidPostActorRequest)
+    isValidActorId)
 
 
 movies = Blueprint('movies', __name__)
@@ -126,15 +126,36 @@ def add_movie_actor(id):
         if not movie:
             abort(404)
         data = json.loads(request.data)
-        if not isValidPostActorRequest(data):
+        if not isValidActorId(data):
             abort(400)
         actor = Actor.query.get(data['actor-id'])
-        if not actor:
+        if not actor or actor in movie.actors:
             abort(422)
         movie.add_actor(actor)
         return jsonify({
             'success': True,
             'actor': actor.format()
         }), 201
+    except Exception as error:
+        raise error
+
+
+@movies.route('/movies/<int:id>/actors', methods=['DELETE'])
+def remove_actor_from_movie(id):
+    try:
+        movie = Movie.query.get(id)
+        if not movie:
+            abort(404)
+        data = json.loads(request.data)
+        if not isValidActorId(data):
+            abort(400)
+        actor = Actor.query.get(data['actor-id'])
+        if not actor or actor not in movie.actors:
+            abort(422)
+        movie.delete_actor(actor)
+        return jsonify({
+            'success': True,
+            'deleted': actor.id
+        }), 200
     except Exception as error:
         raise error
