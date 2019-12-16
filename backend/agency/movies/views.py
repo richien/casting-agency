@@ -97,3 +97,19 @@ def delete_movie(id):
         }), 200
     except Exception as error:
         raise error
+
+
+@movies.route('/movies/<int:id>/actors', methods=['GET'])
+def retrieve_movie_actors(id):
+    try:
+        movie = Movie.query.get(id)
+        if not movie:
+            abort(404)
+        actors = movie.actors
+        return jsonify({
+            'success': True,
+            'actors': [actor.format() for actor in actors],
+            'total_actors': len(actors)
+        }), 200
+    except Exception as error:
+        raise error

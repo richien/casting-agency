@@ -1,5 +1,6 @@
 import os
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -17,6 +18,13 @@ def setup_db(app, database_path=database_uri):
     db.create_all()
 
 
+movie_actors = db.Table(
+        'movieactors',
+        Column('actor_id', Integer, ForeignKey('actors.id', ondelete='CASCADE'), primary_key=True),
+        Column('movie_id', Integer, ForeignKey('movies.id', ondelete='CASCADE'), primary_key=True)
+    )
+
+
 class Actor(db.Model):
     __tablename__ = 'actors'
 
@@ -24,6 +32,7 @@ class Actor(db.Model):
     name = Column(String, nullable=False)
     age = Column(Integer, nullable=False)
     gender = Column(String, nullable=False)
+    movies = relationship('Movie', secondary=movie_actors, backref='actors')
 
     def __init__(self, name, age, gender):
         self.name = name

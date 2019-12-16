@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 from agency import app
-from agency.models import setup_db, Movie
+from agency.models import setup_db, Movie, movie_actors, Actor
 
 
 class MoviesTestCase(unittest.TestCase):
@@ -31,6 +31,8 @@ class MoviesTestCase(unittest.TestCase):
 
     def tearDown(self):
         with self.app.app_context():
+            for actor in Actor.query.all():
+                actor.delete()
             self.db.session.query(Movie).delete()
             self.db.session.commit()
 
@@ -264,3 +266,28 @@ class MoviesTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 422)
         self.assertEqual(data['message'], 'unable to process request')
+
+    def test_get_actors_in_a_movie(self):
+        with self.app.app_context():
+            actor = Actor(name="James Doe", age=23, gender="male")
+            actor.movies = [self.movie]
+            actor.insert()
+
+        response = self.client().get(f'/api/v1/movies/{self.movie_id}/actors')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertIsInstance(data['actors'], list)
+        self.assertEqual(data['total_actors'], 1)
+
+    def test_get_movie_actors_with_invalid_movie_id(self):
+        movie_id = 0  # invalid movie id
+
+        response = self.client().get(f'/api/v1/movies/{movie_id}/actors')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 404)
+        self.assertEqual(data['message'], 'resource not found')
