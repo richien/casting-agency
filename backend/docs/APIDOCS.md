@@ -404,3 +404,35 @@ GET /movies/<int:id>/actors
   - error: 404
 - If there is no movie in the database with the given movie ID, a `404` error response will be returned.
 Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+```
+POST /movies/<int:id>/actors
+```
+
+- General
+    - Takes a json object containing an actor's ID in the request body.
+    - Returns an actor object and a success value of true.
+
+- Request Arguments: 
+    - None
+
+- Sample: ```curl -X POST http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -d '{"actor-id": 2}'``` `TODO Use the heroku url`
+```
+{
+  "actor": {
+    "age": 22,
+    "gender": "male",
+    "id": 2,
+    "name": "Peter Jack"
+  },
+  "success": true
+}
+```
+
+- Response Codes
+  - success: 201
+  - error: 400, 404, 422
+- If there are validation errors in the request, a 400 error response is returned.
+- If a movie with the given movie ID does not exist, a 404 error response is returned.
+- If an actor with the given actor ID does not exist, a 422 error response is returned.
+Checkout the section on [error handling](#error-handling) above for the structure of the error response.

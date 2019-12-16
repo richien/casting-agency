@@ -61,3 +61,12 @@ def isValidPatchRequest(data):
             isValid = False
             break
     return isValid
+
+
+def isValidPostActorRequest(data):
+    isValid = True
+    if 'actor-id' not in data.keys() or data['actor-id'] == '':
+        isValid = False
+    if 'actor-id' in data.keys() and not isinstance(data['actor-id'], int):
+        isValid = False
+    return isValid

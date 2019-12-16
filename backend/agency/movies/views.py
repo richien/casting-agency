@@ -1,8 +1,12 @@
 import json
 from flask import Blueprint, jsonify, request, abort
 
-from ..models import Movie
-from .helpers import isValidPostRequest, reformat, isValidPatchRequest
+from ..models import Movie, Actor
+from .helpers import (
+    isValidPostRequest,
+    reformat,
+    isValidPatchRequest,
+    isValidPostActorRequest)
 
 
 movies = Blueprint('movies', __name__)
@@ -111,5 +115,26 @@ def retrieve_movie_actors(id):
             'actors': [actor.format() for actor in actors],
             'total-actors': len(actors)
         }), 200
+    except Exception as error:
+        raise error
+
+
+@movies.route('/movies/<int:id>/actors', methods=['POST'])
+def add_movie_actor(id):
+    try:
+        movie = Movie.query.get(id)
+        if not movie:
+            abort(404)
+        data = json.loads(request.data)
+        if not isValidPostActorRequest(data):
+            abort(400)
+        actor = Actor.query.get(data['actor-id'])
+        if not actor:
+            abort(422)
+        movie.add_actor(actor)
+        return jsonify({
+            'success': True,
+            'actor': actor.format()
+        }), 201
     except Exception as error:
         raise error
