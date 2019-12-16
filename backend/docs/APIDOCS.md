@@ -58,7 +58,7 @@ GET /actors
     }
   ],
   "success": true,
-  "total_actors": 1
+  "total-actors": 1
 }
 ```
 
@@ -188,6 +188,38 @@ DELETE /actors/<int:id>
 
 
 ```
+GET /actors/<int:id>/movies
+```
+
+- General
+    - Returns a list of movie objects, the total number of movies in the database and a success value of true, for the
+      actor with the given ID.
+
+- Request Arguments: 
+    - None
+
+- Sample: ```curl http://localhost:5000/api/v1/actors/2/movies``` `TODO Use the heroku url`
+```
+{
+  "movies": [
+    {
+      "id": 3,
+      "release-date": "2020-02-09T00:00:00",
+      "title": "Waterproof"
+    }
+  ],
+  "success": true,
+  "total-movies": 1
+}
+```
+
+- Response Codes
+  - success: 200
+  - error: 404
+- If there is no actor in the database with the given actor ID, a `404` error response will be returned.
+Checkout the section on [error handling](#error-handling) above for the structure of the error response.
+
+```
 GET /movies
 ```
 
@@ -214,7 +246,7 @@ GET /movies
     }
   ],
   "success": true,
-  "total_movies": 1
+  "total-movies": 1
 }
 ```
 
@@ -340,7 +372,7 @@ DELETE /movies/<int:id>
 - If a movie with the supplied ID doesn't exist in the database, a 422 error response is returned.
  Checkout the section on [error handling](#error-handling) above for the structure of the error response.
 
- ```
+```
 GET /movies/<int:id>/actors
 ```
 
@@ -363,12 +395,12 @@ GET /movies/<int:id>/actors
     }
   ],
   "success": true,
-  "total_actors": 1
+  "total-actors": 1
 }
 ```
 
 - Response Codes
   - success: 200
   - error: 404
-- If there are no actors in the database for the given movie ID, a `404` error response will be returned.
+- If there is no movie in the database with the given movie ID, a `404` error response will be returned.
 Checkout the section on [error handling](#error-handling) above for the structure of the error response.

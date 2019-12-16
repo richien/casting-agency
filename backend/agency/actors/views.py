@@ -23,7 +23,7 @@ def retrieve_actors():
         return jsonify({
                 'success': True,
                 'actors': data,
-                'total_actors': total_actors
+                'total-actors': total_actors
             }), 200
     except Exception as error:
         raise error
@@ -90,5 +90,21 @@ def delete_actor(id):
                 'success': True,
                 'deleted': actor.id
             }), 200
+    except Exception as error:
+        raise error
+
+
+@actors.route('/actors/<int:id>/movies', methods=['GET'])
+def retrieve_actor_movies(id):
+    try:
+        actor = Actor.query.get(id)
+        if not actor:
+            abort(404)
+        movies = [movie.format() for movie in actor.movies]
+        return jsonify({
+            'success': True,
+            'movies': movies,
+            'total-movies': len(movies)
+        }), 200
     except Exception as error:
         raise error

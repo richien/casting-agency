@@ -23,7 +23,7 @@ def retrieve_movies():
         return jsonify({
                 'success': True,
                 'movies': data,
-                'total_movies': total_movies
+                'total-movies': total_movies
             }), 200
     except Exception as error:
         raise error
@@ -109,7 +109,7 @@ def retrieve_movie_actors(id):
         return jsonify({
             'success': True,
             'actors': [actor.format() for actor in actors],
-            'total_actors': len(actors)
+            'total-actors': len(actors)
         }), 200
     except Exception as error:
         raise error

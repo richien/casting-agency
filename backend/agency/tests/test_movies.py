@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 from agency import app
-from agency.models import setup_db, Movie, movie_actors, Actor
+from agency.models import setup_db, Movie, Actor
 
 
 class MoviesTestCase(unittest.TestCase):
@@ -52,7 +52,7 @@ class MoviesTestCase(unittest.TestCase):
         self.assertEqual(
             data['movies'][0]['release-date'], movie['release-date']
         )
-        self.assertEqual(data['total_movies'], 1)
+        self.assertEqual(data['total-movies'], 1)
 
     def test_get_movies_with_invalid_page_number(self):
         page = 100  # This page doesn't exist
@@ -279,7 +279,7 @@ class MoviesTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
         self.assertIsInstance(data['actors'], list)
-        self.assertEqual(data['total_actors'], 1)
+        self.assertEqual(data['total-actors'], 1)
 
     def test_get_movie_actors_with_invalid_movie_id(self):
         movie_id = 0  # invalid movie id

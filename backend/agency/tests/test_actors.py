@@ -4,7 +4,7 @@ import unittest
 from flask_sqlalchemy import SQLAlchemy
 
 from agency import app
-from agency.models import setup_db, Actor
+from agency.models import setup_db, Actor, Movie
 
 
 class ActorsTestCase(unittest.TestCase):
@@ -27,6 +27,8 @@ class ActorsTestCase(unittest.TestCase):
 
     def tearDown(self):
         with self.app.app_context():
+            for movie in Movie.query.all():
+                movie.delete()
             self.db.session.query(Actor).delete()
             self.db.session.commit()
 
@@ -41,7 +43,7 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(actor['name'], data['actors'][0]['name'])
         self.assertEqual(actor['age'], data['actors'][0]['age'])
         self.assertEqual(actor['gender'], data['actors'][0]['gender'])
-        self.assertEqual(data['total_actors'], 1)
+        self.assertEqual(data['total-actors'], 1)
 
     def test_get_actors_with_invalid_page_number(self):
         page = 100  # This page doesn't exist
@@ -183,3 +185,28 @@ class ActorsTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertEqual(data['error'], 422)
         self.assertEqual(data['message'], 'unable to process request')
+
+    def test_get_movies_of_an_actor(self):
+        with self.app.app_context():
+            movie = Movie(title="Draw", release_date="2020-03-10")
+            movie.actors = [self.actor]
+            movie.insert()
+
+        response = self.client().get(f'/api/v1/actors/{self.actor_id}/movies')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertIsInstance(data['movies'], list)
+        self.assertEqual(data['total-movies'], 1)
+
+    def test_get_actor_movies_with_invalid_actor_id(self):
+        actor_id = 0  # invalid actor id
+
+        response = self.client().get(f'/api/v1/actors/{actor_id}/movies')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 404)
+        self.assertEqual(data['message'], 'resource not found')

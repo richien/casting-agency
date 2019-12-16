@@ -20,8 +20,10 @@ def setup_db(app, database_path=database_uri):
 
 movie_actors = db.Table(
         'movieactors',
-        Column('actor_id', Integer, ForeignKey('actors.id', ondelete='CASCADE'), primary_key=True),
-        Column('movie_id', Integer, ForeignKey('movies.id', ondelete='CASCADE'), primary_key=True)
+        Column('actor_id', Integer, ForeignKey(
+            'actors.id', ondelete='CASCADE'), primary_key=True),
+        Column('movie_id', Integer, ForeignKey(
+            'movies.id', ondelete='CASCADE'), primary_key=True)
     )
 
 
