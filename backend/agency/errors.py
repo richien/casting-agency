@@ -1,5 +1,6 @@
 from . import app
 from flask import jsonify
+from agency.auth.views import AuthError
 
 
 @app.errorhandler(404)
@@ -45,3 +46,12 @@ def internal_error(error):
         'error': 500,
         'message': 'internal server error'
     }), 500
+
+
+@app.errorhandler(AuthError)
+def auth_error(error):
+    return jsonify({
+        'success': False,
+        'error': error.status_code,
+        'message': f"{error.error['code']}: {error.error['description']}"
+    }), error.status_code

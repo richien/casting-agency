@@ -26,6 +26,27 @@ pip install -r requirements.txt
 
 This will install all of the required packages within the `requirements.txt` file.
 
+#### Third Party Dependencies
+
+##### Auth0
+
+[Auth0](https://auth0.com/) is an identity management platform. The API uses Auth0 to manage authentication and authorization using JSON Web Tokens(JWT) that include Role Based Access Control(RBAC) permission claims.
+
+- Setup Auth0
+    - Create an Auth0 account if you dont't have one.
+    - Select a unique tenant domain
+    - Create a new single page web application
+    - Create a new API
+        - in API Settings:
+            - Enable RBAC
+            - Enable Add Permissions in the Access Token
+    - Create new API permissions as listed in the `Getting Started` section of the [docs/APIDOCS.md](docs/APIDOCS.md) file.
+    - Create new roles as described in the `Getting Started` section of the [docs/APIDOCS.md](docs/APIDOCS.md) file.
+- Additional Auth0 setup is required for running the tests locally.
+    - From your Auth0 account, create a new machine-machine application called **Executive Producer**.
+    - Authorize the machine to use the API you created earlier, giving it all the permissions for the Executive Producer role. The `client ID` and `client Secret` for this machine will need to be added to a `.env` file as decribed in the [Running the server](#running-the-server) section of this document.
+    - Repeat the above instructions to create two other machine-machine applications called **Casting Director** and **Casting Assistant**.
+    - NOTE: The machine to machine applications are required for the automation of the RBAC test cases. These tests were implemented with the python unittest library. 
 ##### Key Dependencies
 
 - [Flask](http://flask.pocoo.org/)  is a lightweight backend microservices framework. Flask is required to handle requests and responses.
@@ -34,15 +55,20 @@ This will install all of the required packages within the `requirements.txt` fil
 
 - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) is the extension we'll use to handle cross origin requests from our frontend server.
 
+- [Auth0](https://auth0.com/) is an identity management platform we'll use for authentication and authorization on the backend.
+
 ## Database Setup
-From within the PostgreSQL shell, run the following commands to create the following databases
-`-TODO- Running migrations? OR Restore Database from agency.sql file?`
+With Postgres running, create and restore a database using the `agency.sql` file provided.
+- *NOTE* You will need to edit the `OWNER` in the `agency.sql` file to the name of the database user.
+    For instance `ALTER TABLE public.actors OWNER TO [DATABASE_USERNAME];`. Do this for all such instances in the file.
+- From the `backend` folder, in terminal run:
 ```bash
-CREATE DATABASE agency
+createdb agency
+psql agency < agency.sql
 ```
 Create another database that will be used for running tests.
 ```bash
-CREATE DATABASE agency_test
+createdb agency_test
 ```
 Ensure that the user has all privileges access to both databases. If you need additional information on setting up the PostgreSQL databases, checkout the [PostgreSQL tutorial](http://www.postgresqltutorial.com/).
 
@@ -53,8 +79,10 @@ From within the `backend` directory first ensure you are working using your crea
 To run the server:
 
 - Create a `.env` file in the root of the `backend` directory. 
-- Copy the contents of `.env.example` into the `.env` file and edit with the database information from the previous section.
-- Run the command `source .env` to load the environment variables
+- Copy the contents of `.env.example` into the `.env` file.
+- Edit with the database information from the previous section.
+- Add the Auth0 machine to machine applications' `Client ID` and `Client Secret`.
+- Run the command `source .env` to load the environment variables.
 - Run the tests `pytest`. If the tests all pass, then the setup was successfull.
 - To run the application on `http://localhost:5000`, execute:
 

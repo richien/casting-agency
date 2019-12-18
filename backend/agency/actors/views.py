@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, abort, request
 
 from ..models import Actor
 from .helpers import isValidPostRequest, isValidPatchRequest
+from ..auth.views import requires_auth
 
 
 actors = Blueprint('actors', __name__)
@@ -10,6 +11,7 @@ PER_PAGE = 10
 
 
 @actors.route('/actors', methods=['GET'])
+@requires_auth(permission='get:actors')
 def retrieve_actors():
     page = request.args.get('page', 1, type=int)
     limit = request.args.get('limit', PER_PAGE, type=int)
@@ -30,6 +32,7 @@ def retrieve_actors():
 
 
 @actors.route('/actors/<int:id>', methods=['GET'])
+@requires_auth(permission='get:actors')
 def retrieve_actor(id):
     try:
         actor = Actor.query.get(id)
@@ -44,6 +47,7 @@ def retrieve_actor(id):
 
 
 @actors.route('/actors', methods=['POST'])
+@requires_auth(permission='post:actors')
 def add_actor():
     try:
         data = json.loads(request.data)
@@ -60,6 +64,7 @@ def add_actor():
 
 
 @actors.route('/actors/<int:id>', methods=['PATCH'])
+@requires_auth(permission='patch:actors')
 def edit_actor(id):
     try:
         actor = Actor.query.get(id)
@@ -80,6 +85,7 @@ def edit_actor(id):
 
 
 @actors.route('/actors/<int:id>', methods=['DELETE'])
+@requires_auth(permission='delete:actors')
 def delete_actor(id):
     try:
         actor = Actor.query.get(id)
@@ -95,6 +101,7 @@ def delete_actor(id):
 
 
 @actors.route('/actors/<int:id>/movies', methods=['GET'])
+@requires_auth(permission='get:movies')
 def retrieve_actor_movies(id):
     try:
         actor = Actor.query.get(id)

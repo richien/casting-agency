@@ -7,6 +7,7 @@ from .helpers import (
     reformat,
     isValidPatchRequest,
     isValidActorId)
+from agency.auth.views import requires_auth
 
 
 movies = Blueprint('movies', __name__)
@@ -14,6 +15,7 @@ PER_PAGE = 10
 
 
 @movies.route('/movies', methods=['GET'])
+@requires_auth(permission='get:movies')
 def retrieve_movies():
     page = request.args.get('page', 1, type=int)
     limit = request.args.get('limit', PER_PAGE, type=int)
@@ -34,6 +36,7 @@ def retrieve_movies():
 
 
 @movies.route('/movies/<int:id>', methods=['GET'])
+@requires_auth(permission='get:movies')
 def retrieve_movie(id):
     try:
         movie = Movie.query.get(id)
@@ -48,6 +51,7 @@ def retrieve_movie(id):
 
 
 @movies.route('/movies', methods=['POST'])
+@requires_auth(permission='post:movies')
 def add_movie():
     try:
         data = json.loads(request.data)
@@ -65,6 +69,7 @@ def add_movie():
 
 
 @movies.route('/movies/<int:id>', methods=['PATCH'])
+@requires_auth(permission='patch:movies')
 def edit_movie(id):
     try:
         movie = Movie.query.get(id)
@@ -89,6 +94,7 @@ def edit_movie(id):
 
 
 @movies.route('/movies/<int:id>', methods=['DELETE'])
+@requires_auth(permission='delete:movies')
 def delete_movie(id):
     try:
         movie = Movie.query.get(id)
@@ -104,6 +110,7 @@ def delete_movie(id):
 
 
 @movies.route('/movies/<int:id>/actors', methods=['GET'])
+@requires_auth(permission='get:actors')
 def retrieve_movie_actors(id):
     try:
         movie = Movie.query.get(id)
@@ -120,6 +127,7 @@ def retrieve_movie_actors(id):
 
 
 @movies.route('/movies/<int:id>/actors', methods=['POST'])
+@requires_auth(permission='post:actors')
 def add_movie_actor(id):
     try:
         movie = Movie.query.get(id)
@@ -141,6 +149,7 @@ def add_movie_actor(id):
 
 
 @movies.route('/movies/<int:id>/actors', methods=['DELETE'])
+@requires_auth(permission='delete:actors')
 def remove_actor_from_movie(id):
     try:
         movie = Movie.query.get(id)

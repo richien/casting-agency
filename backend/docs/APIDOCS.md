@@ -3,7 +3,7 @@
 ## Introduction
 
 The Casting Agency application models a company that is responsible for creating movies and managing and assigning actors to those movies.
-This API document details the available endpoints for performing these actions.
+This API document details the available endpoints for performing these actions. The API was developed following REST principles.
 
 ## Getting Started
 - Base url: This API is not currently hosted but can be accessed in a local environment on the following url. `--TODO-- Use the Heroku url`
@@ -11,7 +11,31 @@ This API document details the available endpoints for performing these actions.
 -TODO-- Use the Heroku url
 http://localhost:5000/api/v1 
 ```
-- The API in its current version uses Auth0 authentication mechanisms. `--TODO--`
+- The API in its current version uses Auth0 mechanisms for authentication and authorization. A JWT token should be passed in the request headers using `Authorization Bearer token`. The payload of the JWT token should contain permissions.
+- The API uses the  **Auth0 Role Based Access Control** mechanisms for implementing authorization for each endpoint. The following  permissions are currently accepted;
+    - `get:actors`
+    - `get:movies`
+    - `post:actors`
+    - `post:movies`
+    - `patch:actors`
+    - `patch:movies`
+    - `delete:actors`
+    - `delete:movies`
+
+- Roles and their corresponding permissions are listed below:
+  - **Casting Assistant**: 
+    - `get:actors`
+    - `get:movies`
+  - **Casting Director**: 
+    All the permissions of the Casting Assistant as well as;
+    - `post:actors`
+    - `patch:actors`
+    - `patch:movies`
+    - `delete:actors`
+  - **Executive Producer**: 
+    All the permisions of the Casting Director as well as;
+    - `post:movies`
+    - `delete:movies`
 
  ## Error Handling
  Errors are returned as JSON objects in the following format:
@@ -28,6 +52,7 @@ http://localhost:5000/api/v1
  - 422: unable to process request 
  - 405: method not allowed
  - 500: internal server error
+ - Error codes 401 and 403 are returned for authentication and authorization errors respectively.
 
 ## Resource endpoint library
 
@@ -45,8 +70,10 @@ GET /actors
 - Request Arguments: 
     - `page` integer [optional - defaults to 1]
     - `limit` integer [optional - defaults to 10]
+- Required Permissions:
+    - `get:actors` 
 
-- Sample: ``` curl http://localhost:5000/api/v1/actors?page=1``` `TODO Use the heroku url`
+- Sample: ``` curl http://localhost:5000/api/v1/actors?page=1 -H 'Authorization: Bearer token-goes-here'``` `TODO Use the heroku url`
 ```
 {
   "actors": [
@@ -79,7 +106,10 @@ GET /actors/<int:id>
 - Request Arguments: 
     - None
 
-- Sample: ``` curl http://localhost:5000/api/v1/actors/1``` `TODO Use the heroku url`
+- Required Permissions:
+    - `get:actors`
+
+- Sample: ``` curl http://localhost:5000/api/v1/actors/1 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
   "actor": {
@@ -110,7 +140,10 @@ POST /actors
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X POST http://localhost:5000/api/v1/actors -H "content-type:application/json" -d '{"name": "Jane Vanfon", "gender": "female", "age": 28}'``` `TODO Use the heroku url`
+- Required Permissions:
+    - `post:actors`
+
+- Sample: ```curl -X POST http://localhost:5000/api/v1/actors -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"name": "Jane Vanfon", "gender": "female", "age": 28}'``` `TODO Use the heroku url`
 ```
 {
   "actor": {
@@ -141,7 +174,10 @@ PATCH /actors/<int:id>
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X PATCH http://localhost:5000/api/v1/actors/2 -H "content-type:application/json" -d '{"name": "Jane Vanfon Matthews"}'``` `TODO Use the heroku url`
+- Required Permissions:
+    - `patch:actors`
+
+- Sample: ```curl -X PATCH http://localhost:5000/api/v1/actors/2 -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"name": "Jane Vanfon Matthews"}'``` `TODO Use the heroku url`
 ```
 {
   "actor": {
@@ -172,7 +208,10 @@ DELETE /actors/<int:id>
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X DELETE http://localhost:5000/api/v1/actors/2``` `TODO Use the heroku url`
+- Required Permissions:
+    - `delete:actors`
+
+- Sample: ```curl -X DELETE http://localhost:5000/api/v1/actors/2 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
   "deleted": 2,
@@ -198,7 +237,10 @@ GET /actors/<int:id>/movies
 - Request Arguments: 
     - None
 
-- Sample: ```curl http://localhost:5000/api/v1/actors/2/movies``` `TODO Use the heroku url`
+- Required Permissions:
+    - `get:movies`
+
+- Sample: ```curl http://localhost:5000/api/v1/actors/2/movies -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
   "movies": [
@@ -235,7 +277,11 @@ GET /movies
     - `page` integer [optional - defaults to 1]
     - `limit` integer [optional - defaults to 10]
 
-- Sample: ``` curl http://localhost:5000/api/v1/movies?page=1``` `TODO Use the heroku url`
+- Required Permissions:
+    - `get:movies`
+
+
+- Sample: ``` curl http://localhost:5000/api/v1/movies?page=1 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
   "movies": [
@@ -268,7 +314,11 @@ GET /movies/<int:id>
 - Request Arguments: 
     - None
 
-- Sample: ``` curl http://localhost:5000/api/v1/movies/1``` `TODO Use the heroku url`
+- Required Permissions:
+    - `get:movies`
+
+
+- Sample: ``` curl http://localhost:5000/api/v1/movies/1 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
   "movie": {
@@ -298,7 +348,11 @@ POST /movies
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X POST http://localhost:5000/api/v1/movies -H "content-type:application/json" -d '{"title": "A Sudden Rise", "release-date": "2020-10-10T15:00:00"}'``` `TODO Use the heroku url`
+- Required Permissions:
+    - `post:movies`
+
+
+- Sample: ```curl -X POST http://localhost:5000/api/v1/movies -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"title": "A Sudden Rise", "release-date": "2020-10-10T15:00:00"}'``` `TODO Use the heroku url`
 ```
 {
   "movie": {
@@ -328,7 +382,11 @@ PATCH /movies/<int:id>
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X PATCH http://localhost:5000/api/v1/movies/9 -H "content-type:application/json" -d '{"title": "Elevated", "release-date": "2020-03-01"}'``` `TODO Use the heroku url`
+- Required Permissions:
+    - `patch:movies`
+
+
+- Sample: ```curl -X PATCH http://localhost:5000/api/v1/movies/9 -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"title": "Elevated", "release-date": "2020-03-01"}'``` `TODO Use the heroku url`
 ```
 {
   "movie": {
@@ -358,7 +416,11 @@ DELETE /movies/<int:id>
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X DELETE http://localhost:5000/api/v1/movies/9``` `TODO Use the heroku url`
+- Required Permissions:
+    - `delete:movies`
+
+
+- Sample: ```curl -X DELETE http://localhost:5000/api/v1/movies/9 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
   "deleted": 9,
@@ -383,7 +445,11 @@ GET /movies/<int:id>/actors
 - Request Arguments: 
     - None
 
-- Sample: ```curl http://localhost:5000/api/v1/movies/3/actors``` `TODO Use the heroku url`
+- Required Permissions:
+    - `get:actors`
+
+
+- Sample: ```curl http://localhost:5000/api/v1/movies/3/actors -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
   "actors": [
@@ -416,7 +482,11 @@ POST /movies/<int:id>/actors
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X POST http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -d '{"actor-id": 2}'``` `TODO Use the heroku url`
+- Required Permissions:
+    - `post:actors`
+
+
+- Sample: ```curl -X POST http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"actor-id": 2}'``` `TODO Use the heroku url`
 ```
 {
   "actor": {
@@ -450,7 +520,11 @@ DELETE /movies/<int:id>/actors
 - Request Arguments: 
     - None
 
-- Sample: ```curl -X DELETE http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -d '{"actor-id": 4}'``` `TODO Use the heroku url`
+- Required Permissions:
+    - `delete:actors`
+
+
+- Sample: ```curl -X DELETE http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"actor-id": 4}'``` `TODO Use the heroku url`
 ```
 {
   "deleted": 4,
