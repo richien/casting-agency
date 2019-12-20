@@ -114,13 +114,6 @@ class MoviesTestCase(unittest.TestCase):
         self.assertEqual(data, mock.not_found_error_response)
 
     def test_get_movie_with_assistant_token(self):
-        release_date = datetime(2020, 12, 11)
-        movie = {
-            'id': self.movie_id,
-            'title': 'The Hatchet',
-            'release-date': release_date.isoformat()
-        }
-
         response = self.client().get(
             f'/api/v1/movies/{self.movie_id}',
             headers={'Authorization': f'Bearer {assistant_token}'})
@@ -128,16 +121,9 @@ class MoviesTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['movie'], movie)
+        self.assertEqual(data['movie'].keys(), mock.movie.keys())
 
     def test_get_movie_with_director_token(self):
-        release_date = datetime(2020, 12, 11)
-        movie = {
-            'id': self.movie_id,
-            'title': 'The Hatchet',
-            'release-date': release_date.isoformat()
-        }
-
         response = self.client().get(
             f'/api/v1/movies/{self.movie_id}',
             headers={'Authorization': f'Bearer {director_token}'})
@@ -145,16 +131,9 @@ class MoviesTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['movie'], movie)
+        self.assertEqual(data['movie'].keys(), mock.movie.keys())
 
     def test_get_movie_with_producer_token(self):
-        release_date = datetime(2020, 12, 11)
-        movie = {
-            'id': self.movie_id,
-            'title': 'The Hatchet',
-            'release-date': release_date.isoformat()
-        }
-
         response = self.client().get(
             f'/api/v1/movies/{self.movie_id}',
             headers={'Authorization': f'Bearer {producer_token}'})
@@ -162,7 +141,7 @@ class MoviesTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['movie'], movie)
+        self.assertEqual(data['movie'].keys(), mock.movie.keys())
 
     def test_get_movie_with_invalid_movie_id(self):
         movie_id = 0  # invalid movie ID
@@ -439,7 +418,7 @@ class MoviesTestCase(unittest.TestCase):
 
     def test_get_actors_in_a_movie_with_assistant_token(self):
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.movies = [self.movie]
             actor.insert()
 
@@ -455,7 +434,7 @@ class MoviesTestCase(unittest.TestCase):
 
     def test_get_actors_in_a_movie_with_director_token(self):
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.movies = [self.movie]
             actor.insert()
 
@@ -471,7 +450,7 @@ class MoviesTestCase(unittest.TestCase):
 
     def test_get_actors_in_a_movie_with_producer_token(self):
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.movies = [self.movie]
             actor.insert()
 
@@ -499,7 +478,7 @@ class MoviesTestCase(unittest.TestCase):
     def test_add_actor_to_movie_with_assistant_token(self):
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
 
@@ -516,7 +495,7 @@ class MoviesTestCase(unittest.TestCase):
     def test_add_actor_to_movie_with_director_token(self):
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
 
@@ -534,7 +513,7 @@ class MoviesTestCase(unittest.TestCase):
     def test_add_actor_to_movie_with_producer_token(self):
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
 
@@ -553,7 +532,7 @@ class MoviesTestCase(unittest.TestCase):
         movie_id = 0  # invalid movie id
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
 
@@ -607,7 +586,7 @@ class MoviesTestCase(unittest.TestCase):
     def test_remove_actor_from_movie_with_assistant_token(self):
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
             movie = Movie.query.get(self.movie_id)
@@ -626,7 +605,7 @@ class MoviesTestCase(unittest.TestCase):
     def test_remove_actor_from_movie_with_director_token(self):
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
             movie = Movie.query.get(self.movie_id)
@@ -646,7 +625,7 @@ class MoviesTestCase(unittest.TestCase):
     def test_remove_actor_from_movie_with_producer_token(self):
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
             movie = Movie.query.get(self.movie_id)
@@ -667,7 +646,7 @@ class MoviesTestCase(unittest.TestCase):
         movie_id = 0  # invalid movie id
         actor_id = ''
         with self.app.app_context():
-            actor = Actor(name="James Doe", age=23, gender="male")
+            actor = Actor(name="James Doe", dob='1997-07-09', gender="male")
             actor.insert()
             actor_id = actor.id
 

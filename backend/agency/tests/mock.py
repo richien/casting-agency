@@ -27,6 +27,8 @@ bad_request_error_message = 'bad request'
 
 not_allowed_error_message = 'method not allowed'
 
+undecodable_token_message = 'invalid_token: Unable to decode token'
+
 casting_asst_token = '''eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqYzFOVU\
 pCTVRrMFJEYzRSakF6TmpNMlJrVkJSalZETVRBM01rRkJNakl3T0VNNFFrSXpNQSJ9.eyJpc3MiOiJ\
 odHRwczovL2Nhc3RpbmcuYXV0aDAuY29tLyIsInN1YiI6IlgwZjRkdjBtRUJKcTNlanB1Q3BESzNUUW\
@@ -83,6 +85,8 @@ EMuU6RWDUcraBGTFa8wnkyi4MGt0gHERpibMWLro4XpfsXMqnB2vVuymKZtClhWo5gWMDOE6FjZvfus\
 4H7Rn5CCRT0ZCeAerLljRWcti-xkgOAMJqYqR7Ih34cXC0DP41F-hUMTkO5seIY6_BYvEyrmyomM3de\
 s7t-Bgym7g7Mow'''
 
+undecodable_token = '''eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqYzFOVUpCTVRrMFJEYzRSakF6TmpNMlJrVkJSalZETVRBM01rRkJNakl3T0VNNFFrSXpNQSJ9.eyJpc3MiOiJodHRwczovL2Nhc3RpbmcuYXV0aDAuY29tLyIsInN1YiI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxQGNsaWVudHMiLCJhdWQiOiJjYXN0aW5nYWdlbmN5IiwiaWF0IjoxNTc2ODIwNDc2LCJleHAiOjE1NzY5MDY4NzYsImF6cCI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxIiwic2NvcGUiOiJnZXQ6YWN0b3JzIGdldDptb3ZpZXMgcG9zdDphY3RvcnMgcG9zdDptb3ZpZXMgcGF0Y2g6YWN0b3JzIHBhdGNoOm1vdmllcyBkZWxldGU6YWN0b3JzIGRlbGV0ZTptb3ZpZXMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyJdfQ.x6a-YmjpCvXXH9B_YRzY5ehJQXMuD7sF8JK43AO7Mb_yZlgtfIfvsGB_VnAfpEnAJWzk_0TFMa9gOiiXRlssWih_lgK-dxcKEcBlYHVntwXu4fqCjFbNeRerqRVli1Mvq3s026EyfkxCk3hcLse6Hk6iQkgcXAZeqEhISEG_tsOi3A_lAkI97IdFpNnYCxYg6sqq1w9IdfveU0rxw9lNZE75DQpfLGX55-ayKixMMJd18t8jJz9EmIUVjm6ZHrjSJH4b4qUg2bt5DT7Rbn8BpFyBDmTkvfR9MfOTc_zvEneb2Cxu9tHBKv5VpMz-i09qiJRRxOQq2woRAGZxW3wjbweyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqYzFOVUpCTVRrMFJEYzRSakF6TmpNMlJrVkJSalZETVRBM01rRkJNakl3T0VNNFFrSXpNQSJ9.eyJpc3MiOiJodHRwczovL2Nhc3RpbmcuYXV0aDAuY29tLyIsInN1YiI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxQGNsaWVudHMiLCJhdWQiOiJjYXN0aW5nYWdlbmN5IiwiaWF0IjoxNTc2NjU1NTUxLCJleHAiOjE1NzY3NDE5NTEsImF6cCI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxIiwic2NvcGUiOiJnZXQ6YWN0b3JzIGdldDptb3ZpZXMgcG9zdDphY3RvcnMgcG9zdDptb3ZpZXMgcGF0Y2g6YWN0b3JzIHBhdGNoOm1vdmllcyBkZWxldGU6YWN0b3JzIGRlbGV0ZTptb3ZpZXMgZ2V0Om1vdmllYWN0b3JzIGdldDphY3Rvcm1vdmllcyBwb3N0Om1vdmllYWN0b3IgZGVsZXRlOm1vdmllYWN0b3IiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDptb3ZpZWFjdG9ycyIsImdldDphY3Rvcm1vdmllcyIsInBvc3Q6bW92aWVhY3RvciIsImRlbGV0ZTptb3ZpZWFjdG9yIl19.sB4d4rilN6WHC999i3o4ETkOgIawkqVP5J_LfsEdYSpAQxCYrtrWa_cr9sO9tx5u7lHBkcna5dmUk3bV4U6WTTcpjbCDkXv_S2LWNuFEJok8IzjgIeFwCaL-yamiXJ7GZ4LFluU5xRkx9Yo4O17m1KJvjFK_KeLAKr2Niu5Rm_MN_4bRARkUohHIo5KODycfaoV21QMPKLTI-xYWRmsBfEfA6gy0FKVjzXLFNljXaag0YBAqryFuTeHuKNSRKeetf8BYZ3j6JWKL914yo9bjQyFIJ6uGnpmsDx-aeVy5WBQH3aBw17QIJwVcaqIdyleW2O9qVAakEs0D-lGMWaDImw'''  # noqa
+
 bad_request_error_response = {
                                 'success': False,
                                 'error': 400,
@@ -131,6 +135,12 @@ invalid_claims_response = {
                                 'message': invalid_claims_message
                             }
 
+undecodable_token_response = {
+                                'success': False,
+                                'error': 401,
+                                'message': undecodable_token_message
+                            }
+
 forbidden_error_response = {
                                 'success': False,
                                 'error': 403,
@@ -154,3 +164,20 @@ unprocessable_error_response = {
                                 'error': 422,
                                 'message': unprocessable_error_message
                             }
+
+actor = {
+            'id': '',
+            'name': '',
+            'age': '',
+            'gender': '',
+            'created-at': '',
+            'updated-at': ''
+        }
+
+movie = {
+            'id': '',
+            'title': '',
+            'release-date': '',
+            'created-at': '',
+            'updated-at': ''
+        }

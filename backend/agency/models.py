@@ -2,6 +2,7 @@ import os
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime, timedelta
 
 
 database_uri = os.getenv('DATABASE_URI')
@@ -32,32 +33,45 @@ class Actor(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    age = Column(Integer, nullable=False)
+    dob = Column(DateTime, nullable=False)
     gender = Column(String, nullable=False)
     movies = relationship('Movie', secondary=movie_actors, backref='actors')
+    created_at = Column(DateTime, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
 
-    def __init__(self, name, age, gender):
+    def __init__(self, name, dob, gender):
         self.name = name
-        self.age = age
+        self.dob = dob
         self.gender = gender
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def insert(self):
         db.session.add(self)
         db.session.commit()
 
     def update(self):
+        self.updated_at = datetime.now()
         db.session.commit()
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
+    def get_age(self):
+        today = datetime.now().date()
+        days_in_year = 365.2425
+        age = (today - self.dob.date()) // timedelta(days=days_in_year)
+        return age
+
     def format(self):
         return {
             'id': self.id,
             'name': self.name,
-            'age': self.age,
-            'gender': self.gender
+            'age': self.get_age(),
+            'gender': self.gender,
+            'created-at': self.created_at.isoformat(),
+            'updated-at': self.updated_at.isoformat()
         }
 
 
@@ -67,16 +81,21 @@ class Movie(db.Model):
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
     release_date = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
 
     def __init__(self, title, release_date):
         self.title = title
         self.release_date = release_date
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def insert(self):
         db.session.add(self)
         db.session.commit()
 
     def update(self):
+        self.updated_at = datetime.now()
         db.session.commit()
 
     def delete(self):
@@ -95,5 +114,7 @@ class Movie(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'release-date': self.release_date.isoformat()
+            'release-date': self.release_date.isoformat(),
+            'created-at': self.created_at.isoformat(),
+            'updated-at': self.updated_at.isoformat()
         }

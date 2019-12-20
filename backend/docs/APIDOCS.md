@@ -14,12 +14,12 @@ http://localhost:5000/api/v1
 - The API in its current version uses Auth0 mechanisms for authentication and authorization. A JWT token should be passed in the request headers using `Authorization Bearer token`. The payload of the JWT token should contain permissions.
 - The API uses the  **Auth0 Role Based Access Control** mechanisms for implementing authorization for each endpoint. The following  permissions are currently accepted;
     - `get:actors`
-    - `get:movies`
     - `post:actors`
-    - `post:movies`
     - `patch:actors`
-    - `patch:movies`
     - `delete:actors`
+    - `get:movies`
+    - `post:movies`   
+    - `patch:movies`
     - `delete:movies`
 
 - Roles and their corresponding permissions are listed below:
@@ -76,17 +76,27 @@ GET /actors
 - Sample: ``` curl http://localhost:5000/api/v1/actors?page=1 -H 'Authorization: Bearer token-goes-here'``` `TODO Use the heroku url`
 ```
 {
-  "actors": [
-    {
-      "age": 23,
-      "gender": "Male",
-      "id": 1,
-      "name": "James Henry Jones"
-    }
-  ],
-  "success": true,
-  "total-actors": 1
-}
+    "actors": [
+        {
+            "age": 24,
+            "created-at": "2019-12-20T09:24:08.377268",
+            "gender": "female",
+            "id": 7,
+            "name": "Jane Vanfon",
+            "updated-at": "2019-12-20T13:13:50.581077"
+        },
+        {
+            "age": 29,
+            "created-at": "2019-12-20T09:31:48.060282",
+            "gender": "male",
+            "id": 9,
+            "name": "Peter Stranse",
+            "updated-at": "2019-12-20T09:46:39.789014"
+        }
+    ],
+    "success": true,
+    "total-actors": 2
+
 ```
 
 - Response Codes
@@ -109,16 +119,18 @@ GET /actors/<int:id>
 - Required Permissions:
     - `get:actors`
 
-- Sample: ``` curl http://localhost:5000/api/v1/actors/1 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
+- Sample: ``` curl http://localhost:5000/api/v1/actors/9 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
-  "actor": {
-    "age": 23,
-    "gender": "Male",
-    "id": 1,
-    "name": "James Henry Jones"
-  },
-  "success": true
+    "actor": {
+        "age": 29,
+        "created-at": "2019-12-20T09:31:48.060282",
+        "gender": "male",
+        "id": 9,
+        "name": "Peter Stranse",
+        "updated-at": "2019-12-20T09:46:39.789014"
+    },
+    "success": true
 }
 ```
 
@@ -134,7 +146,7 @@ POST /actors
 ```
 
 - General
-    - Takes a json object containing an actor's name, age and gender in the request body.
+    - Takes a json object containing an actor's name, dob(date of birth - ISO format) and gender in the request body.
     - Returns an actor object and a success value of true.
 
 - Request Arguments: 
@@ -143,16 +155,18 @@ POST /actors
 - Required Permissions:
     - `post:actors`
 
-- Sample: ```curl -X POST http://localhost:5000/api/v1/actors -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"name": "Jane Vanfon", "gender": "female", "age": 28}'``` `TODO Use the heroku url`
+- Sample: ```curl -X POST http://localhost:5000/api/v1/actors -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"name": "Jane Vanfon", "gender": "female", "dob": "1995-12-14"}'``` `TODO Use the heroku url`
 ```
 {
-  "actor": {
-    "age": 28,
-    "gender": "female",
-    "id": 2,
-    "name": "Jane Vanfon"
-  },
-  "success": true
+    "actor": {
+        "age": 24,
+        "created-at": "2019-12-20T12:22:11.290889",
+        "gender": "female",
+        "id": 10,
+        "name": "Jane Vanfon",
+        "updated-at": "2019-12-20T12:22:11.290916"
+    },
+    "success": true
 }
 ```
 
@@ -168,7 +182,7 @@ PATCH /actors/<int:id>
 
 - General
     - Updates the supplied fields for the actor object with the given ID.
-    - Takes a json object containing any of the fields; name, age and gender in the request body.
+    - Takes a json object containing any of the fields; name, dob(date of birth - ISO format) and gender in the request body.
     - Returns an actor object and a success value of true.
 
 - Request Arguments: 
@@ -177,16 +191,18 @@ PATCH /actors/<int:id>
 - Required Permissions:
     - `patch:actors`
 
-- Sample: ```curl -X PATCH http://localhost:5000/api/v1/actors/2 -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"name": "Jane Vanfon Matthews"}'``` `TODO Use the heroku url`
+- Sample: ```curl -X PATCH http://localhost:5000/api/v1/actors/10 -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"name": "Jane Vanfon Matthews"}'``` `TODO Use the heroku url`
 ```
 {
-  "actor": {
-    "age": 28,
-    "gender": "female",
-    "id": 2,
-    "name": "Jane Vanfon Matthews"
-  },
-  "success": true
+    "actor": {
+        "age": 24,
+        "created-at": "2019-12-20T12:22:11.290889",
+        "gender": "female",
+        "id": 10,
+        "name": "Jane Vanfon Matthews",
+        "updated-at": "2019-12-20T12:27:40.436492"
+    },
+    "success": true
 }
 ```
 
@@ -231,6 +247,7 @@ GET /actors/<int:id>/movies
 ```
 
 - General
+    - Retrieve an actor's movies.
     - Returns a list of movie objects, the total number of movies in the database and a success value of true, for the
       actor with the given ID.
 
@@ -240,18 +257,20 @@ GET /actors/<int:id>/movies
 - Required Permissions:
     - `get:movies`
 
-- Sample: ```curl http://localhost:5000/api/v1/actors/2/movies -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
+- Sample: ```curl http://localhost:5000/api/v1/actors/9/movies -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
-  "movies": [
-    {
-      "id": 3,
-      "release-date": "2020-02-09T00:00:00",
-      "title": "Waterproof"
-    }
-  ],
-  "success": true,
-  "total-movies": 1
+    "movies": [
+        {
+            "created-at": "2019-12-20T12:37:16.868226",
+            "id": 12,
+            "release-date": "2020-03-01T00:00:00",
+            "title": "Elevated",
+            "updated-at": "2019-12-20T12:41:22.670044"
+        }
+    ],
+    "success": true,
+    "total-movies": 1
 }
 ```
 
@@ -284,16 +303,25 @@ GET /movies
 - Sample: ``` curl http://localhost:5000/api/v1/movies?page=1 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
-  "movies": [
-    {
-      "id": 1,
-      "release-date": "2020-12-11T00:00:00",
-      "title": "The Hatchet"
-    }
-  ],
-  "success": true,
-  "total-movies": 1
-}
+    "movies": [
+        {
+            "created-at": "2019-12-20T12:35:59.496877",
+            "id": 11,
+            "release-date": "2020-10-10T15:00:00",
+            "title": "A Sudden Rise",
+            "updated-at": "2019-12-20T12:35:59.496899"
+        },
+        {
+            "created-at": "2019-12-20T12:37:16.868226",
+            "id": 12,
+            "release-date": "2020-03-23T16:30:00",
+            "title": "Distinct Roads",
+            "updated-at": "2019-12-20T12:37:16.868620"
+        }
+    ],
+    "success": true,
+    "total-movies": 2
+
 ```
 
 - Response Codes
@@ -308,6 +336,7 @@ GET /movies/<int:id>
 ```
 
 - General
+    - Retrieves a movie by the movie ID.
     - Returns a movie object with the given ID and a success value of true.
     - The release date is returned in ISO format
 
@@ -318,15 +347,17 @@ GET /movies/<int:id>
     - `get:movies`
 
 
-- Sample: ``` curl http://localhost:5000/api/v1/movies/1 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
+- Sample: ``` curl http://localhost:5000/api/v1/movies/12 -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
-  "movie": {
-    "id": 1,
-    "release-date": "2020-12-11T00:00:00",
-    "title": "The Hatchet"
-  },
-  "success": true
+    "movie": {
+        "created-at": "2019-12-20T12:37:16.868226",
+        "id": 12,
+        "release-date": "2020-03-23T16:30:00",
+        "title": "Distinct Roads",
+        "updated-at": "2019-12-20T12:37:16.868620"
+    },
+    "success": true
 }
 ```
 
@@ -342,6 +373,7 @@ POST /movies
 ```
 
 - General
+    - Adds a movie.
     - Takes a json object containing a movie's title, release-date (in ISO format) in the request body.
     - Returns a movie object and a success value of true.
 
@@ -355,12 +387,14 @@ POST /movies
 - Sample: ```curl -X POST http://localhost:5000/api/v1/movies -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"title": "A Sudden Rise", "release-date": "2020-10-10T15:00:00"}'``` `TODO Use the heroku url`
 ```
 {
-  "movie": {
-    "id": 9,
-    "release-date": "2020-10-10T15:00:00",
-    "title": "A Sudden Rise"
-  },
-  "success": true
+    "movie": {
+        "created-at": "2019-12-20T12:35:59.496877",
+        "id": 11,
+        "release-date": "2020-10-10T15:00:00",
+        "title": "A Sudden Rise",
+        "updated-at": "2019-12-20T12:35:59.496899"
+    },
+    "success": true
 }
 ```
 
@@ -386,15 +420,17 @@ PATCH /movies/<int:id>
     - `patch:movies`
 
 
-- Sample: ```curl -X PATCH http://localhost:5000/api/v1/movies/9 -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"title": "Elevated", "release-date": "2020-03-01"}'``` `TODO Use the heroku url`
+- Sample: ```curl -X PATCH http://localhost:5000/api/v1/movies/12 -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"title": "Elevated", "release-date": "2020-03-01"}'``` `TODO Use the heroku url`
 ```
 {
-  "movie": {
-    "id": 9,
-    "release-date": "2020-03-01T00:00:00",
-    "title": "Elevated"
-  },
-  "success": true
+    "movie": {
+        "created-at": "2019-12-20T12:37:16.868226",
+        "id": 12,
+        "release-date": "2020-03-01T00:00:00",
+        "title": "Elevated",
+        "updated-at": "2019-12-20T12:41:22.670044"
+    },
+    "success": true
 }
 ```
 
@@ -439,8 +475,7 @@ GET /movies/<int:id>/actors
 ```
 
 - General
-    - Returns a list of actor objects, the total number of actors in the database and a success value of true, for the
-      movie with the given ID.
+    - Returns a list of actor objects, the total number of actors in the database and a success value of true, for the movie with the given ID.
 
 - Request Arguments: 
     - None
@@ -452,16 +487,26 @@ GET /movies/<int:id>/actors
 - Sample: ```curl http://localhost:5000/api/v1/movies/3/actors -H "Authorization: Bearer token-goes-here"``` `TODO Use the heroku url`
 ```
 {
-  "actors": [
-    {
-      "age": 22,
-      "gender": "male",
-      "id": 2,
-      "name": "Peter Jack"
-    }
-  ],
-  "success": true,
-  "total-actors": 1
+    "actors": [
+        {
+            "age": 31,
+            "created-at": "2019-12-20T09:24:08.377268",
+            "gender": "female",
+            "id": 7,
+            "name": "Jane Vanfon",
+            "updated-at": "2019-12-20T09:24:08.377322"
+        },
+        {
+            "age": 29,
+            "created-at": "2019-12-20T09:31:48.060282",
+            "gender": "male",
+            "id": 9,
+            "name": "Peter Stranse",
+            "updated-at": "2019-12-20T09:46:39.789014"
+        }
+    ],
+    "success": true,
+    "total-actors": 2
 }
 ```
 
@@ -476,6 +521,7 @@ POST /movies/<int:id>/actors
 ```
 
 - General
+    - Adds an actor to a movie.
     - Takes a json object containing an actor's ID in the request body.
     - Returns an actor object and a success value of true.
 
@@ -486,16 +532,18 @@ POST /movies/<int:id>/actors
     - `post:actors`
 
 
-- Sample: ```curl -X POST http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"actor-id": 2}'``` `TODO Use the heroku url`
+- Sample: ```curl -X POST http://localhost:5000/api/v1/movies/3/actors -H "content-type:application/json" -H "Authorization: Bearer token-goes-here" -d '{"actor-id": 9}'``` `TODO Use the heroku url`
 ```
 {
-  "actor": {
-    "age": 22,
-    "gender": "male",
-    "id": 2,
-    "name": "Peter Jack"
-  },
-  "success": true
+    "actor": {
+        "age": 29,
+        "created-at": "2019-12-20T09:31:48.060282",
+        "gender": "male",
+        "id": 9,
+        "name": "Peter Stranse",
+        "updated-at": "2019-12-20T09:46:39.789014"
+    },
+    "success": true
 }
 ```
 
@@ -513,9 +561,9 @@ DELETE /movies/<int:id>/actors
 ```
 
 - General
+    - Removes the actor from a movie.
     - Takes a json object containing an actor's ID in the request body.
-    - Deletes the actor object with the given actor ID.
-    - Returns the ID of the deleted actor object and a success value of true.
+    - Returns the ID of the removed actor object and a success value of true.
 
 - Request Arguments: 
     - None

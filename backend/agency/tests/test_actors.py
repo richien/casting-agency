@@ -27,7 +27,10 @@ class ActorsTestCase(unittest.TestCase):
             self.db.init_app(self.app)
             self.db.create_all()
             # Add an actor
-            self.actor = Actor(name="James Doe", age=23, gender="male")
+            self.actor = Actor(
+                                name="James Doe",
+                                dob='2000-04-22',
+                                gender="male")
             self.actor.insert()
             self.actor_id = self.actor.id
 
@@ -39,7 +42,6 @@ class ActorsTestCase(unittest.TestCase):
             self.db.session.commit()
 
     def test_get_actors_with_assistant_token(self):
-        actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
         response = self.client().get(
             '/api/v1/actors',
             headers={'Authorization': f'Bearer {assistant_token}'})
@@ -47,13 +49,10 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(actor['name'], data['actors'][0]['name'])
-        self.assertEqual(actor['age'], data['actors'][0]['age'])
-        self.assertEqual(actor['gender'], data['actors'][0]['gender'])
+        self.assertEqual(data['actors'][0].keys(), mock.actor.keys())
         self.assertEqual(data['total-actors'], 1)
 
     def test_get_actors_with_director_token(self):
-        actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
         response = self.client().get(
             '/api/v1/actors',
             headers={'Authorization': f'Bearer {director_token}'})
@@ -61,13 +60,10 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(actor['name'], data['actors'][0]['name'])
-        self.assertEqual(actor['age'], data['actors'][0]['age'])
-        self.assertEqual(actor['gender'], data['actors'][0]['gender'])
+        self.assertEqual(data['actors'][0].keys(), mock.actor.keys())
         self.assertEqual(data['total-actors'], 1)
 
     def test_get_actors_with_producer_token(self):
-        actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
         response = self.client().get(
             '/api/v1/actors',
             headers={'Authorization': f'Bearer {producer_token}'})
@@ -75,9 +71,7 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(actor['name'], data['actors'][0]['name'])
-        self.assertEqual(actor['age'], data['actors'][0]['age'])
-        self.assertEqual(actor['gender'], data['actors'][0]['gender'])
+        self.assertEqual(data['actors'][0].keys(), mock.actor.keys())
         self.assertEqual(data['total-actors'], 1)
 
     def test_get_actors_with_invalid_page_number(self):
@@ -91,7 +85,7 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(data, mock.not_found_error_response)
 
     def test_get_actor_with_assistant_token(self):
-        actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
+        actor = Actor.query.get(self.actor_id)
 
         response = self.client().get(
             f'/api/v1/actors/{self.actor_id}',
@@ -100,12 +94,12 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['actor']['name'], actor['name'])
-        self.assertEqual(data['actor']['age'], actor['age'])
-        self.assertEqual(data['actor']['gender'], actor['gender'])
+        self.assertEqual(data['actor']['name'], actor.name)
+        self.assertEqual(data['actor']['age'], actor.get_age())
+        self.assertEqual(data['actor']['gender'], actor.gender)
 
     def test_get_actor_with_director_token(self):
-        actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
+        actor = Actor.query.get(self.actor_id)
 
         response = self.client().get(
             f'/api/v1/actors/{self.actor_id}',
@@ -114,12 +108,12 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['actor']['name'], actor['name'])
-        self.assertEqual(data['actor']['age'], actor['age'])
-        self.assertEqual(data['actor']['gender'], actor['gender'])
+        self.assertEqual(data['actor']['name'], actor.name)
+        self.assertEqual(data['actor']['age'], actor.get_age())
+        self.assertEqual(data['actor']['gender'], actor.gender)
 
     def test_get_actor_with_producer_token(self):
-        actor = {'name': 'James Doe', 'age': 23, 'gender': 'male'}
+        actor = Actor.query.get(self.actor_id)
 
         response = self.client().get(
             f'/api/v1/actors/{self.actor_id}',
@@ -128,9 +122,9 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['actor']['name'], actor['name'])
-        self.assertEqual(data['actor']['age'], actor['age'])
-        self.assertEqual(data['actor']['gender'], actor['gender'])
+        self.assertEqual(data['actor']['name'], actor.name)
+        self.assertEqual(data['actor']['age'], actor.get_age())
+        self.assertEqual(data['actor']['gender'], actor.gender)
 
     def test_get_actor_with_invalid_actor_id(self):
         actor_id = 0  # This actor ID doesn't exist
@@ -143,7 +137,11 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(data, mock.not_found_error_response)
 
     def test_add_actor_with_assistant_token(self):
-        actor = {'name': 'Jane Vanfon', 'age': 28, 'gender': 'female'}
+        actor = {
+                'name': 'Jane Vanfon',
+                'dob': '1999-01-01',
+                'gender': 'female'
+            }
 
         response = self.client().post(
             '/api/v1/actors',
@@ -156,7 +154,11 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(data, mock.forbidden_error_response)
 
     def test_add_actor_with_director_token(self):
-        actor = {'name': 'Jane Vanfon', 'age': 28, 'gender': 'female'}
+        actor = {
+                'name': 'Jane Vanfon',
+                'dob': '1999-01-01',
+                'gender': 'female'
+            }
 
         response = self.client().post(
             '/api/v1/actors',
@@ -168,11 +170,15 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertTrue(data['success'])
         self.assertEqual(data['actor']['name'], actor['name'])
-        self.assertEqual(data['actor']['age'], actor['age'])
+        self.assertIsInstance(data['actor']['age'], int)
         self.assertEqual(data['actor']['gender'], actor['gender'])
 
     def test_add_actor_with_producer_token(self):
-        actor = {'name': 'Jane Vanfon', 'age': 28, 'gender': 'female'}
+        actor = {
+                'name': 'Jane Vanfon',
+                'dob': '1999-01-01',
+                'gender': 'female'
+            }
 
         response = self.client().post(
             '/api/v1/actors',
@@ -184,7 +190,7 @@ class ActorsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertTrue(data['success'])
         self.assertEqual(data['actor']['name'], actor['name'])
-        self.assertEqual(data['actor']['age'], actor['age'])
+        self.assertIsInstance(data['actor']['age'], int)
         self.assertEqual(data['actor']['gender'], actor['gender'])
 
     def test_add_actor_with_failure_response(self):
@@ -216,6 +222,7 @@ class ActorsTestCase(unittest.TestCase):
 
     def test_edit_actor_with_director_token(self):
         actor = {'name': 'James Peters'}
+        expected_actor = Actor.query.get(self.actor_id)
 
         response = self.client().patch(
             f'/api/v1/actors/{self.actor_id}',
@@ -226,12 +233,13 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['actor']['name'], actor['name'])
-        self.assertEqual(data['actor']['age'], self.actor.age)
-        self.assertEqual(data['actor']['gender'], self.actor.gender)
+        self.assertEqual(data['actor']['name'], expected_actor.name)
+        self.assertEqual(data['actor']['age'], expected_actor.get_age())
+        self.assertEqual(data['actor']['gender'], expected_actor.gender)
 
     def test_edit_actor_with_producer_token(self):
         actor = {'name': 'James Peters'}
+        expected_actor = Actor.query.get(self.actor_id)
 
         response = self.client().patch(
             f'/api/v1/actors/{self.actor_id}',
@@ -242,9 +250,9 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['actor']['name'], actor['name'])
-        self.assertEqual(data['actor']['age'], self.actor.age)
-        self.assertEqual(data['actor']['gender'], self.actor.gender)
+        self.assertEqual(data['actor']['name'], expected_actor.name)
+        self.assertEqual(data['actor']['age'], expected_actor.get_age())
+        self.assertEqual(data['actor']['gender'], expected_actor.gender)
 
     def test_edit_actor_with_invalid_key_in_request_body(self):
         # request with invalid key 'names' in request body
