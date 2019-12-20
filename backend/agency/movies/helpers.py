@@ -1,4 +1,4 @@
-from datetime import datetime
+from dateutil.parser import parse
 
 
 def isValidPostRequest(data):
@@ -21,10 +21,12 @@ def isValidPostRequest(data):
     return isValid
 
 
-def isValidDateString(date):
+def isValidDateString(iso_date):
     isValid = True
     try:
-        datetime.fromisoformat(date)
+        validDate = parse(iso_date)
+        if not validDate:
+            isValid = False
     except Exception:
         isValid = False
     return isValid
@@ -38,7 +40,7 @@ def reformat(data):
        string to a datetime object."""
     reformatted_data = {
         'title': data['title'],
-        'release_date': datetime.fromisoformat(data['release-date'])
+        'release_date': parse(data['release-date'])
     }
     return reformatted_data
 

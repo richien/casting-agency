@@ -82,18 +82,6 @@ class AuthTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(data, mock.invalid_signature_response)
 
-    def test_get_actors_with_invalid_claims_in_token(self):
-        header = {
-            'Authorization': f'Bearer {mock.token_with_invalid_claims}'}
-
-        response = self.client().get(
-            '/api/v1/actors',
-            headers=header)
-        data = json.loads(response.data)
-
-        self.assertEqual(response.status_code, 401)
-        self.assertEqual(data, mock.invalid_claims_response)
-
     def test_get_actors_with_undecodable_token(self):
         header = {
             'Authorization': f'Bearer {mock.undecodable_token}'}

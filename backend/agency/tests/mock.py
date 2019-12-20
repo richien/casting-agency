@@ -14,9 +14,6 @@ token_expired_message = 'token_expired: Token expired'
 invalid_signature_token_message = '''\
 invalid_token: Unable to verify token header'''
 
-invalid_claims_message = '''\
-invalid_claims: Please check the issuer and audience'''
-
 forbidden_error_message = 'forbidden: Permission not found'
 
 unprocessable_error_message = 'unable to process request'
@@ -73,18 +70,6 @@ Xy_H-blwKVfxuIp24A5qL0TslGHcdFccbbJQsx3QmO8wGQHhUUulWwi7UTcxnYjQar\
 Je0cabz94BtK6LKJsKZIkxQZdG73KAO2xzBG2R7Fk3Vk1uxgHqK30AtxPV5_GbsrpVvDc0wYDvR3L\
 zcQzCfw6GGlUkgzrmvq7S3zfz7I8woQwjQaJnywmUJbw8fc4wl1CAjP'''
 
-token_with_invalid_claims = '''eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlF\
-qYzFOVUpCTVRrMFJEYzRSakF6TmpNMlJrVkJSalZETVRBM01rRkJNakl3T0VNNFFrSXpNQSJ9.eyJp\
-c3MiOiJodHRwczovL2Nhc3RpbmcuYXV0aDAuY29tLyIsInN1YiI6IjN0ZE9aVmtCcTZjRlFsS001YW\
-ZsTW8xaGhyUHJ4amFtQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2Nhc3RpbmcuYXV0aDAuY29tL2Fwa\
-S92Mi8iLCJpYXQiOjE1NzY3ODczNzksImV4cCI6MTU3Njg3Mzc3OSwiYXpwIjoiM3RkT1pWa0JxNmNG\
-UWxLTTVhZmxNbzFoaHJQcnhqYW0iLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.JT9Z8DAp9LFy\
-9LxBVzi5zjOPXpoOBHHb_Ibokyn3yfqSYdJ4ZuOeePr2o6nyp6vXTrnTdKkDan-SoTSll-Go2PTgkB4\
-J4vfIITUEFuiFMKir1uPzCZ02YHZYgYOv83k3v9C8HGzorMjbcuJD0wTGS2qUQKeRkhvz0mWWDmhuy5\
-EMuU6RWDUcraBGTFa8wnkyi4MGt0gHERpibMWLro4XpfsXMqnB2vVuymKZtClhWo5gWMDOE6FjZvfus\
-4H7Rn5CCRT0ZCeAerLljRWcti-xkgOAMJqYqR7Ih34cXC0DP41F-hUMTkO5seIY6_BYvEyrmyomM3de\
-s7t-Bgym7g7Mow'''
-
 undecodable_token = '''eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqYzFOVUpCTVRrMFJEYzRSakF6TmpNMlJrVkJSalZETVRBM01rRkJNakl3T0VNNFFrSXpNQSJ9.eyJpc3MiOiJodHRwczovL2Nhc3RpbmcuYXV0aDAuY29tLyIsInN1YiI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxQGNsaWVudHMiLCJhdWQiOiJjYXN0aW5nYWdlbmN5IiwiaWF0IjoxNTc2ODIwNDc2LCJleHAiOjE1NzY5MDY4NzYsImF6cCI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxIiwic2NvcGUiOiJnZXQ6YWN0b3JzIGdldDptb3ZpZXMgcG9zdDphY3RvcnMgcG9zdDptb3ZpZXMgcGF0Y2g6YWN0b3JzIHBhdGNoOm1vdmllcyBkZWxldGU6YWN0b3JzIGRlbGV0ZTptb3ZpZXMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyJdfQ.x6a-YmjpCvXXH9B_YRzY5ehJQXMuD7sF8JK43AO7Mb_yZlgtfIfvsGB_VnAfpEnAJWzk_0TFMa9gOiiXRlssWih_lgK-dxcKEcBlYHVntwXu4fqCjFbNeRerqRVli1Mvq3s026EyfkxCk3hcLse6Hk6iQkgcXAZeqEhISEG_tsOi3A_lAkI97IdFpNnYCxYg6sqq1w9IdfveU0rxw9lNZE75DQpfLGX55-ayKixMMJd18t8jJz9EmIUVjm6ZHrjSJH4b4qUg2bt5DT7Rbn8BpFyBDmTkvfR9MfOTc_zvEneb2Cxu9tHBKv5VpMz-i09qiJRRxOQq2woRAGZxW3wjbweyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqYzFOVUpCTVRrMFJEYzRSakF6TmpNMlJrVkJSalZETVRBM01rRkJNakl3T0VNNFFrSXpNQSJ9.eyJpc3MiOiJodHRwczovL2Nhc3RpbmcuYXV0aDAuY29tLyIsInN1YiI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxQGNsaWVudHMiLCJhdWQiOiJjYXN0aW5nYWdlbmN5IiwiaWF0IjoxNTc2NjU1NTUxLCJleHAiOjE1NzY3NDE5NTEsImF6cCI6IldzaXRUVWhzeU9hekZJd3V2ZU9Hc3RyeXYwNHUzQWcxIiwic2NvcGUiOiJnZXQ6YWN0b3JzIGdldDptb3ZpZXMgcG9zdDphY3RvcnMgcG9zdDptb3ZpZXMgcGF0Y2g6YWN0b3JzIHBhdGNoOm1vdmllcyBkZWxldGU6YWN0b3JzIGRlbGV0ZTptb3ZpZXMgZ2V0Om1vdmllYWN0b3JzIGdldDphY3Rvcm1vdmllcyBwb3N0Om1vdmllYWN0b3IgZGVsZXRlOm1vdmllYWN0b3IiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDptb3ZpZWFjdG9ycyIsImdldDphY3Rvcm1vdmllcyIsInBvc3Q6bW92aWVhY3RvciIsImRlbGV0ZTptb3ZpZWFjdG9yIl19.sB4d4rilN6WHC999i3o4ETkOgIawkqVP5J_LfsEdYSpAQxCYrtrWa_cr9sO9tx5u7lHBkcna5dmUk3bV4U6WTTcpjbCDkXv_S2LWNuFEJok8IzjgIeFwCaL-yamiXJ7GZ4LFluU5xRkx9Yo4O17m1KJvjFK_KeLAKr2Niu5Rm_MN_4bRARkUohHIo5KODycfaoV21QMPKLTI-xYWRmsBfEfA6gy0FKVjzXLFNljXaag0YBAqryFuTeHuKNSRKeetf8BYZ3j6JWKL914yo9bjQyFIJ6uGnpmsDx-aeVy5WBQH3aBw17QIJwVcaqIdyleW2O9qVAakEs0D-lGMWaDImw'''  # noqa
 
 bad_request_error_response = {
@@ -127,12 +112,6 @@ invalid_signature_response = {
                                 'success': False,
                                 'error': 401,
                                 'message': invalid_signature_token_message
-                            }
-
-invalid_claims_response = {
-                                'success': False,
-                                'error': 401,
-                                'message': invalid_claims_message
                             }
 
 undecodable_token_response = {

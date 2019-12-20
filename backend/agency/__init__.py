@@ -23,11 +23,11 @@ setup_db(app)
 api_url_prefix = '/api/v1'
 
 # Import error handlers
-from . import errors
+from . import errors # noqa
 
 # Register blueprints for routes
-from .actors.views import actors
-from .movies.views import movies
+from .actors.views import actors # noqa
+from .movies.views import movies # noqa
 
 
 app.register_blueprint(actors, url_prefix=api_url_prefix)
