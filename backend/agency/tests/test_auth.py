@@ -1,14 +1,8 @@
-# import os
 import json
 import unittest
-# from flask_sqlalchemy import SQLAlchemy
 
 from agency import app
 from agency.tests import mock
-# from agency.models import setup_db, Actor, Movie
-# from .helpers import get_producer_token
-
-# producer_token = get_producer_token()
 
 
 class AuthTestCase(unittest.TestCase):

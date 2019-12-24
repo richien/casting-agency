@@ -14,6 +14,9 @@ movies = Blueprint('movies', __name__)
 PER_PAGE = 10
 
 
+'''
+Retrieves a paginated list of movies.
+'''
 @movies.route('/movies', methods=['GET'])
 @requires_auth(permission='get:movies')
 def retrieve_movies():
@@ -35,6 +38,9 @@ def retrieve_movies():
         raise error
 
 
+'''
+Retrieves a single movie.
+'''
 @movies.route('/movies/<int:id>', methods=['GET'])
 @requires_auth(permission='get:movies')
 def retrieve_movie(id):
@@ -50,6 +56,9 @@ def retrieve_movie(id):
         raise error
 
 
+'''
+Creates a movie.
+'''
 @movies.route('/movies', methods=['POST'])
 @requires_auth(permission='post:movies')
 def add_movie():
@@ -68,6 +77,9 @@ def add_movie():
         raise error
 
 
+'''
+Edits a movie.
+'''
 @movies.route('/movies/<int:id>', methods=['PATCH'])
 @requires_auth(permission='patch:movies')
 def edit_movie(id):
@@ -93,6 +105,9 @@ def edit_movie(id):
         raise error
 
 
+'''
+Deletes a movie.
+'''
 @movies.route('/movies/<int:id>', methods=['DELETE'])
 @requires_auth(permission='delete:movies')
 def delete_movie(id):
@@ -109,6 +124,9 @@ def delete_movie(id):
         raise error
 
 
+'''
+Retrieves a list of actors in a movie.
+'''
 @movies.route('/movies/<int:id>/actors', methods=['GET'])
 @requires_auth(permission='get:actors')
 def retrieve_movie_actors(id):
@@ -126,6 +144,9 @@ def retrieve_movie_actors(id):
         raise error
 
 
+'''
+Adds an actor to a movie.
+'''
 @movies.route('/movies/<int:id>/actors', methods=['POST'])
 @requires_auth(permission='post:actors')
 def add_movie_actor(id):
@@ -148,6 +169,9 @@ def add_movie_actor(id):
         raise error
 
 
+'''
+Removes an actor from a movie.
+'''
 @movies.route('/movies/<int:id>/actors', methods=['DELETE'])
 @requires_auth(permission='delete:actors')
 def remove_actor_from_movie(id):

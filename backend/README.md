@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/richien/casting-agency.svg?style=svg)](https://circleci.com/gh/richien/casting-agency) [![Coverage Status](https://coveralls.io/repos/github/richien/casting-agency/badge.svg?branch=master)](https://coveralls.io/github/richien/casting-agency?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/66834a00f8fa71d4ab4a/maintainability)](https://codeclimate.com/github/richien/casting-agency/maintainability)
 # Casting Agency Backend
 
 ## Getting Started
@@ -58,13 +60,10 @@ This will install all of the required packages within the `requirements.txt` fil
 - [Auth0](https://auth0.com/) is an identity management platform we'll use for authentication and authorization on the backend.
 
 ## Database Setup
-With Postgres running, create and restore a database using the `agency.sql` file provided.
-- *NOTE* You will need to edit the `OWNER` in the `agency.sql` file to the name of the database user.
-    For instance `ALTER TABLE public.actors OWNER TO [DATABASE_USERNAME];`. Do this for all such instances in the file.
+With Postgres running, create two databases.
 - From the `backend` folder, in terminal run:
 ```bash
 createdb agency
-psql agency < agency.sql
 ```
 Create another database that will be used for running tests.
 ```bash
