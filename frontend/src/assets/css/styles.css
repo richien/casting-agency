@@ -1,0 +1,33 @@
+#bg-image-wrapper {
+    height: 100vh;
+    background-image: url('../images/ca-bg-plain.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+}
+
+#brand-logo-img {
+    background-image: url('../images/ca-logo.jpg');
+    height: 50px;
+    width: 200px;
+    background-position: center;
+    background-size: cover;
+    margin-top: 10px;
+}
+
+#text-right {
+    padding: 50vh 10px 0 10px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    font-size: x-large;
+    background-color: moccasin;
+    align-items: right;
+}
+
+#text-left {
+    padding: 50vh 10px 0 10px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    font-size: x-large;
+    background-color: honeydew;
+}
