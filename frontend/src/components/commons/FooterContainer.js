@@ -13,7 +13,6 @@ function FooterContainer() {
                 <h5 className="black-text">Visit</h5>
                 <ul>
                     <li><a className="black-text" href="/">Home</a></li>
-                    <li><a className="black-text" href="/signin">Sign In</a></li>
                     <li><a className="black-text" href="/about">About</a></li>
                 </ul>
               </div>

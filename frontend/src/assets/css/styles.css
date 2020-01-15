@@ -31,3 +31,16 @@
     font-size: x-large;
     background-color: honeydew;
 }
+
+.nav-wrapper #nav-mobile.right.hide-on-med-and-down li button {
+    border: none;
+    background: none
+}
+
+.nav-wrapper #nav-mobile.right.hide-on-med-and-down li button:hover {
+    cursor: pointer;
+}
+
+.nav-wrapper #nav-mobile.right.hide-on-med-and-down li:hover {
+    background: rgb(238, 237, 237);
+}

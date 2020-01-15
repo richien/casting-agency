@@ -1,3 +1,12 @@
+.AppWrapper {
+  text-align: center;
+}
+
+.AppWrapper #lp-spinner {
+  display: inline-block;
+  padding-top: 50vh;
+}
+
 .App {
   text-align: center;
 }
@@ -61,3 +70,5 @@ nav .brand-logo {
     transform: rotate(360deg);
   }
 }
+
+
