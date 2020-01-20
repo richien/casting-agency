@@ -44,3 +44,48 @@
 .nav-wrapper #nav-mobile.right.hide-on-med-and-down li:hover {
     background: rgb(238, 237, 237);
 }
+
+.content-wrapper {
+    background: rgb(246, 244, 244);
+    height: 100vh;
+    padding: 15px;
+    display: flex;
+}
+
+.sidebar-menu {
+    background: white;
+    height: 90vh;
+    width: 20vw;    
+    margin: 10px;
+    border: 1px none;
+    box-shadow: 1px 1px 2px 1px grey;
+}
+
+.main-content {
+    /* background: white; */
+    height: 90vh;
+    width: 70vw;    
+    margin: 10px;
+    /* border: 1px none;
+    box-shadow: 1px 1px 2px 1px grey; */
+    display: flex;
+}
+
+.content-box {
+    background: white;
+    height: 43vh;
+    width: 32.5vw;
+    margin: 0 0 5px 0;
+    border: 1px none;
+    box-shadow: 1px 1px 2px 1px grey;
+}
+
+
+/* .content-box-rt {
+    background: blue;
+    height: 50vh;
+    width: 32.5vw;
+    margin: 0 0 5px 0;
+    border: 1px none;
+    box-shadow: 1px 1px 2px 1px grey;
+} */
