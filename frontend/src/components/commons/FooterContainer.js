@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function FooterContainer() {
     const today = new Date();
@@ -12,8 +13,8 @@ function FooterContainer() {
               <div className="col l4 offset-l2 s12">
                 <h5 className="black-text">Visit</h5>
                 <ul>
-                    <li><a className="black-text" href="/">Home</a></li>
-                    <li><a className="black-text" href="/about">About</a></li>
+                    <li><Link className="black-text" to="/">Home</Link></li>
+                    <li><Link className="black-text" to="/about">About</Link></li>
                 </ul>
               </div>
             </div>

@@ -1,4 +1,8 @@
 {
     "domain": "casting.auth0.com",
-    "clientId": "CyjOtIgLybVyXRlMQloAYQdFa00VmcFW"
+    "clientId": "CyjOtIgLybVyXRlMQloAYQdFa00VmcFW",
+    "audience": "castingagency",
+    "loginRedirect": "http://localhost:3000/auth",
+    "baseApiUrl": "https://api-casting-agency.herokuapp.com/api/v1",
+    "logoutRedirect": "http%3A%2F%2F127.0.0.1:3000"
 }

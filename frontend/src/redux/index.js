@@ -1,5 +1,6 @@
 export { 
-    fetchActorRequest,
-    fetchActorSuccess,
-    fetchActorFailure 
-} from './actor/actorActions'
+    fetchActorsRequest,
+    fetchActorsSuccess,
+    fetchActorsFailure,
+    fetchActors
+} from './actor/actionCreators/fetchActorsActions'

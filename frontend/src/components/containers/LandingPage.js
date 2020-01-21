@@ -1,4 +1,5 @@
 import React from 'react'
+import { UnAuthenticated } from '../../routes/Authentication'
 
 function LandingPage() {
     return (
@@ -16,4 +17,4 @@ function LandingPage() {
     )
 }
 
-export default LandingPage
+export default UnAuthenticated(LandingPage)

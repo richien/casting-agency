@@ -2,7 +2,7 @@ import {
     FETCH_ACTORS_REQUEST,
     FETCH_ACTORS_SUCCESS,
     FETCH_ACTORS_FAILURE
-} from './actorTypes'
+} from '../actorTypes'
 
 const initialState = {
     loading: false,
@@ -10,7 +10,7 @@ const initialState = {
     error: ''
 }
 
-const actorReducer = (state=initialState, action) => {
+const fetchActorsReducer = (state=initialState, action) => {
     switch (action.type) {
         case FETCH_ACTORS_REQUEST:
             return {
@@ -44,4 +44,4 @@ const actorReducer = (state=initialState, action) => {
     }
 }
 
-export default actorReducer
+export default fetchActorsReducer

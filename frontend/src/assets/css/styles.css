@@ -32,6 +32,17 @@
     background-color: honeydew;
 }
 
+.spinner-blue, .spinner-blue-only {
+  border-color: rgb(146, 215, 218) !important;
+}
+
+.spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25vh;
+}
+
 .nav-wrapper #nav-mobile.right.hide-on-med-and-down li button {
     border: none;
     background: none
@@ -58,16 +69,26 @@
     width: 20vw;    
     margin: 10px;
     border: 1px none;
-    box-shadow: 1px 1px 2px 1px grey;
+    box-shadow: 1px 1px 2px 1px lightgrey;
+}
+
+.sidebar-menu ul li {
+    background: moccasin;
+    border: 1px none;
+    padding: 5px;
+    margin: 15px;
+    box-shadow: 1px 1px 2px 1px lightgrey;
+}
+
+.sidebar-menu ul li:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 5px 1px lightgrey;
 }
 
 .main-content {
-    /* background: white; */
     height: 90vh;
     width: 70vw;    
     margin: 10px;
-    /* border: 1px none;
-    box-shadow: 1px 1px 2px 1px grey; */
     display: flex;
 }
 
@@ -77,15 +98,65 @@
     width: 32.5vw;
     margin: 0 0 5px 0;
     border: 1px none;
-    box-shadow: 1px 1px 2px 1px grey;
+    box-shadow: 1px 1px 2px 1px lightgrey;
+    display: block;
+    overflow-y: scroll;
 }
 
+.content-box header {
+    color: lightslategrey;
+    padding: 1em 0px;
+    border-bottom: 0.5px solid moccasin;
+    background: moccasin;
+}
 
-/* .content-box-rt {
-    background: blue;
-    height: 50vh;
-    width: 32.5vw;
-    margin: 0 0 5px 0;
+.content-box h6 {
+    font-weight: bold;
+    margin: 0px;
+  }
+
+.content-box::-webkit-scrollbar {
+    width: 0.5em;
+    background: moccasin;
+}
+
+.content-box::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(211,211,211,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.content-box::-webkit-scrollbar-thumb {
+    background-color: honeydew;
+    outline: 1px solid darkgray;
+}
+
+.list-wrapper {
+    display: flex;
     border: 1px none;
-    box-shadow: 1px 1px 2px 1px grey;
-} */
+    box-shadow: 1px 1px 2px 0px lightgrey;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+.list-wrapper p, .list-wrapper span {
+    margin: 0px;
+}
+.list-wrapper:hover {
+    background-color: honeydew;
+    cursor: pointer;
+}
+
+.list-wrapper span i {
+    font-size: small;
+    font-style: normal;
+    font-weight: lighter;
+}
+
+.actor-wrapper-sm {
+    margin-left: 2vw;
+    display: flex;
+    flex-direction: inherit;
+}
+
+.joined-date-wrapper{
+    margin-left: 20vw;
+}

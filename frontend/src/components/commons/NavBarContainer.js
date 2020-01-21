@@ -1,21 +1,23 @@
 import React from 'react'
-import { useAuth0 } from '../containers/ReactAuth0Spa'
+import { Link } from 'react-router-dom'
+import LoginLink from '../commons/LoginLink'
+import LogoutLink from '../commons/LogoutLink'
+import { isAuthenticated } from '../../utils/localStorage'
 
 function NavBarContainer() {
-
-    const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
     let home;
     let signIn;
     let about;
     let dashboard;
     let signOut;
+
     if(!isAuthenticated) {
-        home = <li><a href="/">Home</a></li>
-        signIn = <li><button onClick={() => loginWithRedirect({})}>Sign In</button></li>
-        about = <li><a href="/about">About</a></li>
+        home = <li><Link to="/">Home</Link></li>
+        signIn = <li><LoginLink/></li>
+        about = <li><Link to="/about">About</Link></li>
     } else {
-        dashboard = <li><a href="/dashboard">Dashboard</a></li>
-        signOut = <li><button onClick={() => logout()}>Sign Out</button></li>
+        dashboard = <li><Link to="/dashboard">Dashboard</Link></li>
+        signOut = <li><LogoutLink/></li>
     }
 
     return (
