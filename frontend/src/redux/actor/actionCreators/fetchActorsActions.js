@@ -38,7 +38,7 @@ export const fetchActors = () => {
         }
         axios.get(endpoint, {'headers': headers})
         .then(response => {
-            dispatch(fetchActorsSuccess(response.data.actors))
+            dispatch(fetchActorsSuccess(response.data))
         })
         .catch(error => {
             dispatch(fetchActorsFailure(error.message))

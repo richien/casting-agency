@@ -1,0 +1,283 @@
+[33mcommit 19d2802a1ef69be871b37a304cd2a794ce7ca47e[m[33m ([m[1;36mHEAD -> [m[1;32mft-view-actors-on-dashboard-170765410[m[33m)[m
+Author: Ge-o <willis988@gmail.com>
+Date:   Fri Jan 24 16:50:58 2020 +0300
+
+    feat(view actors) display 10 recent actors on dashboard
+    
+    - refactor the project structure to ease testing of components
+    - add missing tests for components
+
+[33mcommit c2aac44c803a78e5e391837463b00fc1240b02eb[m[33m ([m[1;31morigin/ft-view-actors-on-dashboard-170765410[m[33m)[m
+Author: richien <benwill2014@gmail.com>
+Date:   Tue Jan 21 12:57:42 2020 +0300
+
+    feat(dashboard) view recently added actors
+    
+    - add async action creator to get actors
+    - render list of actors in the component
+
+[33mcommit 11a5a8c6e7cc8991a95d9ae1da1f965d9fc2b24c[m
+Author: richien <benwill2014@gmail.com>
+Date:   Mon Jan 20 19:26:43 2020 +0300
+
+    feat(dashboard) view recently added actors
+    
+    - add dashboard template
+
+[33mcommit 6282265a4919dc062cba47e4d9d22077fd446685[m[33m ([m[1;31morigin/develop[m[33m)[m
+Author: richien <benwill2014@gmail.com>
+Date:   Wed Jan 15 14:18:40 2020 +0300
+
+    feat(sigin page): integrate to Auth0 to display a sign in page
+    
+    - integrate the sign in button to redirect to the Auth0 sign in page
+      when clicked
+    - Redirect the user back to the landing page after authentication
+
+[33mcommit ae169c3c7bb6624dedeb2d9b6171e7425128b8c7[m[33m ([m[1;31morigin/ch-setup-frontend-app[m[33m)[m
+Author: richien <benwill2014@gmail.com>
+Date:   Mon Jan 13 17:03:22 2020 +0300
+
+    chore(setup react app): setup react application with redux
+    
+    - setup the react application in the frontend folder
+    - setup redux and verify functionality with redux devtools ext
+    - create Landing dummy component
+
+[33mcommit c1ebf334d14ec48c0a5e93a897511576cbdee773[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: richien <benwill2014@gmail.com>
+Date:   Tue Dec 24 12:21:42 2019 +0300
+
+    docs(update documentation): add doc comments and update README files
+    
+    - Add badges for build, coverage and maintainability
+    - Add deployed application url to the APIDOCS.md file
+    - Add comments doc comments to classes and functions
+
+[33mcommit bc9446745adf84cc345b61b0dd7a5bfc37a22e45[m
+Author: richien <benwill2014@gmail.com>
+Date:   Fri Dec 20 14:09:29 2019 +0300
+
+    chore(deploy api): deploy api to Heroku
+    
+    - Install gunicorn and add it to the requirements.txt file.
+    - Add a Profile and configure for Heroku it to use gunicorn.
+    - Add config file for CircleCI to enable running of tests.
+    
+    [finishes #170259185]
+
+[33mcommit d062356cdb038d32a5eeed4dd3da2b4229d35401[m
+Author: richien <benwill2014@gmail.com>
+Date:   Fri Dec 20 12:08:12 2019 +0300
+
+    refactor(change models): refactor models to use to additional fields
+    
+    - remove the age field from the Actor model
+    - add a date of birth(dob) field to the Actor model.
+    - add created_at and updated_at timestamps to the Actor and Movie models.
+    - refactor testcases to fix failing tests.
+    - update documentation.
+    
+    [Finishes #170395787]
+
+[33mcommit 50524552878fa8edf27a07bf3b2c1a0a908ab6ed[m
+Author: richien <benwill2014@gmail.com>
+Date:   Wed Dec 18 12:34:56 2019 +0300
+
+    feat(authentication authorization): protect api endpoints
+    
+    - add requires_auth decorator function
+    - add decorator function to routes
+    - refactor testcases to use an access token in requests
+    
+    [Finishes #170181308]
+
+[33mcommit 7cdcf123682c5dec0b73ae49a2b1fe73117d7c68[m
+Author: richien <benwill2014@gmail.com>
+Date:   Mon Dec 16 16:43:48 2019 +0300
+
+    feat(remove actor from movie): remove an actor from a movie
+    
+    -  add an endpoint that removes an actor from a movie
+    - add unittests
+    - update documentation
+    
+    [Finishes #170284902]
+
+[33mcommit a9e92bcb271c9bb24a3dc28c7caafe7d8e7c4fb7[m
+Author: richien <benwill2014@gmail.com>
+Date:   Mon Dec 16 15:49:39 2019 +0300
+
+    feat(add actor to movie): add an actor to a movie:
+    
+    - add an endpoint for adding an actor to a movie
+    - add unittests
+    - update documentation
+    
+    [Finishes #170284867]
+
+[33mcommit 3569cedd64a18c0dd1478feac2ec9ccf9315a1e6[m
+Author: richien <benwill2014@gmail.com>
+Date:   Mon Dec 16 13:30:32 2019 +0300
+
+    feat(get actor movies): retrieve all movies for an actor
+    
+    - add an endpoint for retrieving all an actor's movies using the
+      actor's ID.
+    - add unittests
+    - update documentation.
+    
+    [Finishes #170284805]
+
+[33mcommit f3d2f2a5681ae392cac38421bd4d9e192873c02e[m
+Author: richien <benwill2014@gmail.com>
+Date:   Mon Dec 16 12:52:37 2019 +0300
+
+    feat(get movie actors): retrieve all actors in a movie
+    
+    - add an endpoint that retrieves all actors in given movie
+    - add unittests
+    - update documentation
+    
+    [Finishes #170284927]
+
+[33mcommit 642b6db05cc7c8abfec50de54b90d20eaa4fea10[m
+Author: richien <benwill2014@gmail.com>
+Date:   Fri Dec 13 17:44:26 2019 +0300
+
+    feat(delete movie): delete a movie from the database
+    
+    - add endpoint for deleting a movie from the database
+    - add unittests
+    - update documentation
+    
+    [Finishes #170178262]
+
+[33mcommit 40fa83a8a04c9143bcc845982911e3041b50e899[m
+Author: richien <benwill2014@gmail.com>
+Date:   Fri Dec 13 17:19:31 2019 +0300
+
+    feat(edit movie): edit a movie's details
+    
+    -  add an endoint to edit a movie's details
+    - add unittests
+    - update documentation
+    
+    [Finishes #170178241]
+
+[33mcommit a63338da08799c6873297877415ab7a602b350d0[m
+Author: richien <benwill2014@gmail.com>
+Date:   Fri Dec 13 14:07:37 2019 +0300
+
+    feat(add movie): add a movie to the database
+    
+    - add an endpoint for adding a movie to the database
+    - add unittests
+    - update documentation
+    
+    [Finishes #170178253]
+
+[33mcommit 5251c2ccc75a7442d651e524f95665961b6750c6[m
+Author: richien <benwill2014@gmail.com>
+Date:   Fri Dec 13 11:05:43 2019 +0300
+
+    feat(get movie): retrieve a movie given it's ID
+    
+    - add an endpoint that retrieves a movie based on it's ID.
+    - add unittests for the endpoint
+    - update the documentation
+    
+    [Finishes #170178172]
+
+[33mcommit 3036c748387b7f313aa4d8836f1ce66d6fc47326[m
+Author: richien <benwill2014@gmail.com>
+Date:   Thu Dec 12 16:47:15 2019 +0300
+
+    feat(get movies): retrieve all movies from the database
+    
+    - add a Movie model
+    - add an endpoint to get all movies
+    - add unittests
+    - update documentation
+    
+    [Finishes #170178157]
+
+[33mcommit 204edc3df5e2dc45cc9f1313c968e34bcd2d7909[m
+Author: richien <benwill2014@gmail.com>
+Date:   Thu Dec 12 14:00:58 2019 +0300
+
+    feat(delete actor): delete actor from the database
+    
+    - add endpoint for deleting an actor from the database
+    - add unittests
+    - update documentation
+    
+    [Finishes #170178255]
+
+[33mcommit a86701b10cba230e397bb3ba5fa5436524185b8e[m
+Author: richien <benwill2014@gmail.com>
+Date:   Thu Dec 12 13:15:45 2019 +0300
+
+    feat(edit actor details): edit an actors information
+    
+    - add endpoint for editing an actor's information
+    - add unittests for the endpoint
+    - update documentation
+    
+    [Finishes #170178233]
+
+[33mcommit 16aae76eb49f12804293ea1383326a1b5437ca0f[m
+Author: richien <benwill2014@gmail.com>
+Date:   Thu Dec 12 09:27:56 2019 +0300
+
+    feat(add actor): add an actor to the database
+    
+    - add endpoint to add an actor to the database
+    - add unittests for the endpoint
+    - update the documentation
+    
+    [Finishes #170178248]
+
+[33mcommit 24e377173c035ae546acd770add17b248fa04dae[m
+Author: richien <benwill2014@gmail.com>
+Date:   Thu Dec 12 08:05:15 2019 +0300
+
+    feat(get actor): retrieve an actor by ID
+    
+    - add an endpoint to retrieve an actor by their ID
+    - add unittests for the endpoint
+    - update api documentation
+    
+    [Finishes #170178162]
+
+[33mcommit 6aaa211f5a60f33d8b36734ab107f9ff376fcddc[m
+Author: richien <benwill2014@gmail.com>
+Date:   Tue Dec 10 16:56:02 2019 +0300
+
+    feat(get actors): add endpoint to retrieve all actors
+    
+    - add an Actor model
+    - initialize the database using migrations
+    - add testcases for the route
+    
+    [Finishes #170178149]
+
+[33mcommit 1aaf8a5a9d9b9a0c5d4ed2dc3a61f0ae9025e3e1[m
+Author: Geoffrey Willis <benwill2014@gmail.com>
+Date:   Mon Dec 9 14:38:19 2019 +0300
+
+    chore(setup flask app): setup the backend flask application.
+    
+    - Setup the base folder structure for the application.
+    - Create a folder for the API documentation.
+    - Add a file for configuring environment variables.
+    - Add a README file for the backend application.
+    - Add and register a blueprint for actors routes.
+    - Add and register a blueprint for movies routes.
+    - Add a tests folder with dummy tests for actors and movies.
+
+[33mcommit 4e23072a7d80a198126029fc88a453da0a501751[m
+Author: Geoffrey Willis Barugahare <benwill2014@gmail.com>
+Date:   Mon Dec 9 13:11:34 2019 +0300
+
+    Initial commit

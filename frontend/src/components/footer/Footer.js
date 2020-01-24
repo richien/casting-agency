@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function FooterContainer() {
+function Footer() {
     const today = new Date();
     return (
         <footer className="page-footer">
@@ -28,4 +28,4 @@ function FooterContainer() {
     )
 }
 
-export default FooterContainer
+export default Footer

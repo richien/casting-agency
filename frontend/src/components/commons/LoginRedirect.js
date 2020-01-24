@@ -1,5 +1,5 @@
 import React from 'react'
-import Spinner from '../commons/Spinner'
+import Spinner from './Spinner'
 
 function LoginRedirect() {
 

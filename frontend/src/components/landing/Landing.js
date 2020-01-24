@@ -1,7 +1,7 @@
 import React from 'react'
 import { UnAuthenticated } from '../../routes/Authentication'
 
-function LandingPage() {
+function Landing() {
     return (
         <>
             <div id="bg-image-wrapper">
@@ -17,4 +17,4 @@ function LandingPage() {
     )
 }
 
-export default UnAuthenticated(LandingPage)
+export default UnAuthenticated(Landing)

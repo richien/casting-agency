@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import Actor from '../Actor'
+import Actor from './Actor'
 import { connect } from 'react-redux'
 import {fetchActors} from '../../redux'
 import Spinner from '../commons/Spinner'
@@ -34,8 +34,8 @@ function RecentActorsList({fetchActors, actors, loading}) {
 }
 
 const mapStateToProps = (state) => ({
-    actors: state.actor.actors,
-    loading: state.actor.loading   
+    actors: state.actors.data,
+    loading: state.actors.loading   
 })
 
 const mapDispatchToProps = (dispatch) => {

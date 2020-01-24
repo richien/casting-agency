@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import actorReducer from './actor/reducers/fetchActorsReducer'
+import fetchActorsReducer from './actor/reducers/fetchActorsReducer'
 
 const rootReducer = combineReducers({
-    actor: actorReducer
+    actors: fetchActorsReducer
 })
 
 export default rootReducer

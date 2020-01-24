@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import Profile from '../Profile'
-import SideMenuLinks from '../SideMenuLinks'
-import RecentActorsList from './RecentActorsList'
+import Profile from '../user/Profile'
+import SideMenuLinks from '../commons/SideMenuLinks'
+import RecentActorsList from '../actors/RecentActorsList'
 // import {connect} from 'react-redux'
 import { Authenticated } from '../../routes/Authentication'
 
-function DashboardPage({fetchActors, actorsList}) {
+function Dashboard({fetchActors, actorsList}) {
 
     return (
         <div className='content-wrapper'>
@@ -74,4 +74,4 @@ function DashboardPage({fetchActors, actorsList}) {
 //         fetchActors: () => dispatch(fetchActors())
 //     }
 // }
-export default Authenticated(DashboardPage)
+export default Authenticated(Dashboard)

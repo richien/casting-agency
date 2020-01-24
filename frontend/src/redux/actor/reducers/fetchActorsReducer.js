@@ -6,8 +6,9 @@ import {
 
 const initialState = {
     loading: false,
-    actors: [],
-    error: ''
+    data: [],
+    error: '',
+    totalItems: 0
 }
 
 const fetchActorsReducer = (state=initialState, action) => {
@@ -16,16 +17,18 @@ const fetchActorsReducer = (state=initialState, action) => {
             return {
                 ...state,
                 loading: true,
-                actors: [],
-                error: ''
+                data: [],
+                error: '',
+                totalItems: 0
             }
         case FETCH_ACTORS_SUCCESS:
             if(action.payload) {
                 return {
                     ...state,
                     loading: false,
-                    actors: action.payload,
-                    error: ''
+                    data: action.payload.actors,
+                    error: '',
+                    totalItems: action.payload['total-actors']
                 }
             }
             return state
@@ -34,8 +37,9 @@ const fetchActorsReducer = (state=initialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    actors: [],
-                    error: action.payload
+                    data: [],
+                    error: action.payload,
+                    totalItems: 0
                 }
             }
             return state

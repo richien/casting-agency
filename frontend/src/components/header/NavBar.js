@@ -4,7 +4,7 @@ import LoginLink from '../commons/LoginLink'
 import LogoutLink from '../commons/LogoutLink'
 import { isAuthenticated } from '../../utils/localStorage'
 
-function NavBarContainer() {
+function NavBar() {
     let home;
     let signIn;
     let about;
@@ -37,4 +37,4 @@ function NavBarContainer() {
     )
 }
 
-export default NavBarContainer
+export default NavBar
