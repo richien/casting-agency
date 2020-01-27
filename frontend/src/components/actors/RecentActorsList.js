@@ -19,9 +19,9 @@ function RecentActorsList({fetchActors, actors, loading}) {
             <header><h6>Recently Added Actors</h6></header>
             {
                 loading ? 
-                <div className='spinner'><Spinner /></div> : 
+                <div data-test='spinner' className='spinner'><Spinner /></div> : 
             actors.map((actor, index, actors) => (
-            <div className='list-wrapper' key={actor.id} onClick={() => handleSetRedirect()}>
+            <div data-test='list-wrapper' className='list-wrapper' key={actor.id} onClick={() => handleSetRedirect()}>
                 <p>{index + 1}</p>
                 <span>
                     <Actor actor={actor} key={actor.id} redirect={redirect}/>
