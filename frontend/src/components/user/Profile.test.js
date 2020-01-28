@@ -19,10 +19,6 @@ describe('Profile', () => {
         wrapper = setUp();
     });
     test("should render the user's profile image", () => {
-<<<<<<< HEAD
-=======
-        console.log(wrapper.debug());
->>>>>>> feat(dashboard) add missing test cases to boost coverage
         expect(wrapper.find('img').prop('src')).toBe('my-pic.png');
     });
 
