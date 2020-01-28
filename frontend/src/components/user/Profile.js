@@ -9,7 +9,7 @@ function Profile({user}) {
                         <img src={user.picture} alt='profile' />
                     </div>
                     <div className="card-content">
-                        <p>{user.name}</p>
+                        <p data-test="username">{user.name}</p>
                     </div>
                 </div>
             </div>
