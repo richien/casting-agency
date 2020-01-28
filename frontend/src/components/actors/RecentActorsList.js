@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {fetchActors} from '../../redux'
 import Spinner from '../commons/Spinner'
 import formatDate from '../../utils/formatDate'
+import PropTypes from 'prop-types';
 
 function RecentActorsList({fetchActors, actors, loading}) {
     let [redirect, setRedirect] = useState(false)
@@ -42,6 +43,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchActors: () => dispatch(fetchActors())
     }
+}
+
+RecentActorsList.propTypes = {
+    fetchActors: PropTypes.func,
+    actors: PropTypes.array,
+    loading: PropTypes.bool
 }
 
 export default connect(

@@ -44,7 +44,7 @@ const setUpMount = (initialState={}, newProps={}) => {
 
 
 describe('RecentActorsList', () => {
-    describe('Shallow render', () => {
+    describe('shallow render', () => {
         let wrapper;
         beforeEach(() => {
             wrapper = setUpShallow(initialState)
@@ -53,6 +53,11 @@ describe('RecentActorsList', () => {
         test('renders without errors', () => {
             const listItems = wrapper.find(`[data-test='list-wrapper']`);
             expect(listItems.length).toBe(2);
+        })
+
+        test('sets redirect to true when the div is clicked', () => {
+            wrapper.find(`[data-test='list-wrapper']`).first().simulate('click');
+            expect(wrapper.find('Actor').first().prop('redirect')).toBeTruthy();
         })
     })
 
