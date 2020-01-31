@@ -1,9 +1,5 @@
 import * as types from '../movieTypes';
-import axios from 'axios';
-import config from '../../../auth_config.json';
-
-const baseApiUrl = config.baseApiUrl;
-const token = localStorage.getItem('JWT_TOKEN');
+import { getRecentMovies } from '../../../api/movies';
 
 export const fetchMoviesRequest = () => ({
     type: types.FETCH_MOVIES_REQUEST
@@ -26,11 +22,9 @@ export const fetchMovies = () => dispatch => {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
     }
-    return axios.get(
-        baseApiUrl + '/movies?limit=10',
-        {'headers': headers})
-        .then(res => {
-            dispatch(fetchMoviesSuccess(res.data));
+    return getRecentMovies()
+        .then(data => {
+            dispatch(fetchMoviesSuccess(data));
         })
         .catch(error => {
             dispatch(fetchMoviesFailure(error.message));
