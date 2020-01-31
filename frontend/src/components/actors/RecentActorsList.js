@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Actor from './Actor'
 import { connect } from 'react-redux'
-import {fetchActors} from '../../redux'
+import {fetchActors} from '../../redux/actor'
 import Spinner from '../commons/Spinner'
 import formatDate from '../../utils/formatDate'
 import PropTypes from 'prop-types';

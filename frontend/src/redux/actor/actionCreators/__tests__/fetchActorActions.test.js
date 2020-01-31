@@ -1,6 +1,6 @@
 import moxios from 'moxios';
 import { testStore, mockStore } from '../../../../utils';
-import * as actions from '../../../../redux';
+import * as actions from '../../../actor';
 import * as types from '../../actorTypes';
 
 describe('FetchActorActions', () => {
@@ -37,8 +37,15 @@ describe('FetchActorActions', () => {
                     response: data
                 });
             });
+            const expectedState = {
+                loading: false,
+                data: data.actors,
+                totalItems: data['total-actors'],
+                error: ''
+            }
             await store.dispatch(actions.fetchActors()).then(()=> {
-                    const newState = store.getState();
+                    const newState = store.getState()['actors'];
+                    expect(newState).toEqual(expectedState);
                 })
         });
 

@@ -3,4 +3,4 @@ export {
     fetchActorsSuccess,
     fetchActorsFailure,
     fetchActors
-} from './actor/actionCreators/fetchActorsActions'
+} from './actionCreators/fetchActorsActions'
