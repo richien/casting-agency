@@ -6,16 +6,12 @@ function Actor ({actor, redirect}) {
 
     const actorUri = `/actors/${actor.id}`,
         renderRedirect = () => {
-
             if (redirect) {
-
                 return <Redirect to={actorUri} />;
-
             }
-
         };
     return (
-        <div className="actor-wrapper-sm" >
+        <div className="item-wrapper-sm" >
             {renderRedirect()}
             <p>
                 {actor.name}

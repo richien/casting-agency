@@ -11,7 +11,7 @@ const initialState = {
             ],
         loading: false,
         error: '',
-        totalItems: 0 }
+        totalItems: 2 }
 }
 
 const setUpShallow = (initialState={}, newProps={}) => {

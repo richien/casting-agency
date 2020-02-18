@@ -26,7 +26,7 @@ function RecentActorsList({fetchActors, actors, loading}) {
                 <p>{index + 1}</p>
                 <span>
                     <Actor actor={actor} key={actor.id} redirect={redirect}/>
-                    <div className='joined-date-wrapper'><i>Joined {formatDate(actors[index]['created-at'])}</i></div>
+                    <div className='joined-date-wrapper'><i>Added: {formatDate(actors[index]['created-at'])}</i></div>
                 </span>
             </div>))
             }

@@ -31,7 +31,6 @@ export const fetchActorsFailure = (error) => {
 
 export const fetchActors = () => {
     return (dispatch) => {
-        
         dispatch(fetchActorsRequest());
         return getActors()
         .then(data => {

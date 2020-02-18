@@ -151,12 +151,12 @@
     font-weight: lighter;
 }
 
-.actor-wrapper-sm {
+.item-wrapper-sm {
     margin-left: 2vw;
     display: flex;
     flex-direction: inherit;
 }
 
 .joined-date-wrapper{
-    margin-left: 20vw;
+    margin-left: 19vw;
 }

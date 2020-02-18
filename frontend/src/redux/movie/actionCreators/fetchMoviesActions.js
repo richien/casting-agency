@@ -17,11 +17,6 @@ export const fetchMoviesFailure = errormessage => ({
 
 export const fetchMovies = () => dispatch => {
     dispatch(fetchMoviesRequest());
-    const token = localStorage.getItem('JWT_TOKEN');
-    const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-    }
     return getRecentMovies()
         .then(data => {
             dispatch(fetchMoviesSuccess(data));
