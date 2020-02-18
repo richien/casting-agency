@@ -3,6 +3,7 @@ import SideMenuLinks from '../commons/SideMenuLinks';
 import RecentActorsList from '../actors/RecentActorsList';
 import RecentMoviesList from '../movies/RecentMoviesList';
 import { Authenticated } from '../../routes/Authentication';
+import ActorPieChart from '../actors/ActorPieChart';
 
 function Dashboard() {
 
@@ -35,7 +36,9 @@ function Dashboard() {
                             <div className='row end-xs'>
                                 <div className='col-xs-4'>
                                     <div className='box'>
-                                        <div className='content-box'></div>
+                                        <div className='content-box'>
+                                            <ActorPieChart />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

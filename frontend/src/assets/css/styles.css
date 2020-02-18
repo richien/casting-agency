@@ -73,11 +73,18 @@
 }
 
 .sidebar-menu ul li {
-    background: moccasin;
     border: 1px none;
     padding: 5px;
     margin: 15px;
     box-shadow: 1px 1px 2px 1px lightgrey;
+}
+
+.sidebar-menu ul li a {
+    color: lightslategrey;
+}
+
+.sidebar-menu ul li a:hover {
+    color:rgb(240, 212, 134);
 }
 
 .sidebar-menu ul li:hover {
@@ -107,7 +114,6 @@
     color: lightslategrey;
     padding: 1em 0px;
     border-bottom: 0.5px solid moccasin;
-    background: moccasin;
 }
 
 .content-box h6 {
@@ -159,4 +165,8 @@
 
 .joined-date-wrapper{
     margin-left: 19vw;
+}
+
+.chart-wrapper {
+    margin: 20px 0px;
 }
