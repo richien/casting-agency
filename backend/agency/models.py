@@ -1,5 +1,12 @@
 import os
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy import (
+    Column,
+    String,
+    Integer,
+    DateTime,
+    ForeignKey,
+    func,
+    distinct)
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
@@ -72,6 +79,21 @@ class Actor(db.Model):
             'gender': self.gender,
             'created-at': self.created_at.isoformat(),
             'updated-at': self.updated_at.isoformat()
+        }
+    
+    @classmethod
+    def get_assigned_unassigned_totals(cls):
+        assigned = db.session.query(
+            func.count(
+                distinct(Actor.id)).label('assigned')).filter(
+                    Actor.id == movie_actors.c.actor_id).all()
+        unassigned = db.session.query(
+            func.count(
+                distinct(Actor.id)).label('unassigned')).filter(
+                    Actor.id != movie_actors.c.actor_id).all()
+        return {
+            'assigned': assigned[0].assigned,
+            'unassigned': unassigned[0].unassigned
         }
 
 

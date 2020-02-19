@@ -1,5 +1,6 @@
 import json
 from flask import Blueprint, jsonify, request, abort
+from sqlalchemy import desc
 
 from ..models import Movie, Actor
 from .helpers import (
@@ -24,7 +25,10 @@ def retrieve_movies():
     limit = request.args.get('limit', PER_PAGE, type=int)
     offset = (page - 1) * limit
     try:
-        movies = Movie.query.offset(offset).limit(limit).all()
+        movies = Movie.query.order_by(
+            desc(Movie.created_at)).offset(
+                offset).limit(
+                    limit).all()
         if not movies:
             abort(404)
         data = [movie.format() for movie in movies]

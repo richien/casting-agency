@@ -281,6 +281,34 @@ GET /actors/<int:id>/movies
 Checkout the section on [error handling](#error-handling) above for the structure of the error response.
 
 ```
+GET /actors/totals
+```
+
+- General
+    - Retrieve the total number of actors that are assigned and unassigned to movies.
+    - Returns the total number of actors that are assigned and unassigned to movies and a success value of true
+
+- Request Arguments: 
+    - None
+
+- Required Permissions:
+    - `get:actors`
+
+- Sample: ```curl http://localhost:5000/api/v1/actors/totals -H "Authorization: Bearer token-goes-here"``` 
+```
+{
+    "data": {
+        "assigned": 1,
+        "unassigned": 2
+    },
+    "success": true
+}
+```
+
+- Response Codes
+  - success: 200
+
+```
 GET /movies
 ```
 

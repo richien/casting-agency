@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 
 function Actor ({actor, redirect}) {
 
-    const actorUri = `/actors/${actor.id}`,
-        renderRedirect = () => {
-            if (redirect) {
-                return <Redirect to={actorUri} />;
-            }
-        };
+    const actorUri = `/actors/${actor.id}`;
+    const renderRedirect = () => {
+        if (redirect) {
+            return <Redirect to={actorUri} />;
+        }
+    };
     return (
         <div className="item-wrapper-sm" >
             {renderRedirect()}

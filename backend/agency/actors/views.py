@@ -1,5 +1,6 @@
 import json
 from flask import Blueprint, jsonify, abort, request
+from sqlalchemy import desc
 
 from ..models import Actor
 from .helpers import isValidPostRequest, isValidPatchRequest
@@ -20,7 +21,10 @@ def retrieve_actors():
     limit = request.args.get('limit', PER_PAGE, type=int)
     offset = (page - 1) * limit
     try:
-        actors = Actor.query.offset(offset).limit(limit).all()
+        actors = Actor.query.order_by(
+            desc(Actor.created_at)).offset(
+                offset).limit(
+                    limit).all()
         if not actors:
             abort(404)
         data = [actor.format() for actor in actors]
@@ -131,5 +135,21 @@ def retrieve_actor_movies(id):
             'movies': movies,
             'total-movies': len(movies)
         }), 200
+    except Exception as error:
+        raise error
+
+
+'''
+Retrieves the total number of actors assigned and
+those un-assigned to movies.
+'''
+@actors.route('/actors/totals', methods=['GET'])
+@requires_auth(permission='get:actors')
+def retrieve_actor_totals():
+    try:
+        return jsonify({
+            'success': True,
+            'data': Actor.get_assigned_unassigned_totals()
+        })
     except Exception as error:
         raise error

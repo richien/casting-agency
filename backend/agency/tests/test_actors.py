@@ -396,3 +396,48 @@ class ActorsTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data, mock.not_found_error_response)
+    
+    def test_get_assigned_unassigned_totals(self):
+        movie_id = ''
+        # create a movie
+        with self.app.app_context():
+            movie = Movie(title="Draw", release_date="2020-03-10")
+            movie.actors = [self.actor]
+            movie.insert()
+            movie_id = movie.id
+        # Add an actor to the movie
+        self.client().post(
+            f'/api/v1/movies/{movie_id}/actors',
+            headers={'Authorization': f'Bearer {producer_token}'},
+            data={'actor-id': self.actor_id}
+        )
+        # expect 1 assigned actor and 0 unassigned actors
+        result = Actor.get_assigned_unassigned_totals()
+        self.assertEqual(result['assigned'], 1)
+        self.assertEqual(result['unassigned'], 0)
+
+    def test_retrieve_actor_totals_with_successful_response(self):
+        movie_id = ''
+        # create a movie
+        with self.app.app_context():
+            movie = Movie(title="Draw", release_date="2020-03-10")
+            movie.actors = [self.actor]
+            movie.insert()
+            movie_id = movie.id
+        # Add an actor to the movie
+        self.client().post(
+            f'/api/v1/movies/{movie_id}/actors',
+            headers={'Authorization': f'Bearer {assistant_token}'},
+            data={'actor-id': self.actor_id}
+        )
+        
+        response = self.client().get(
+            f'/api/v1/actors/totals',
+            headers={'Authorization': f'Bearer {assistant_token}'}
+        )
+        result = json.loads(response.data)
+
+        self.assertEqual(result['data']['assigned'], 1)
+        self.assertEqual(result['data']['unassigned'], 0)
+
+
