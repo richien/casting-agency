@@ -13,7 +13,7 @@ function RecentActorsList({fetchActors, actors, loading}) {
     }
     useEffect(() => {
             fetchActors()
-        }, [])
+        }, [fetchActors])
     
     return (
         <div>

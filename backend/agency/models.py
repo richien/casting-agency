@@ -83,14 +83,15 @@ class Actor(db.Model):
     
     @classmethod
     def get_assigned_unassigned_totals(cls):
+        subquery = db.session.query(movie_actors.c.actor_id)
         assigned = db.session.query(
             func.count(
                 distinct(Actor.id)).label('assigned')).filter(
-                    Actor.id == movie_actors.c.actor_id).all()
+                    Actor.id.in_(subquery)).all()
         unassigned = db.session.query(
             func.count(
                 distinct(Actor.id)).label('unassigned')).filter(
-                    Actor.id != movie_actors.c.actor_id).all()
+                    Actor.id.notin_(subquery)).all()
         return {
             'assigned': assigned[0].assigned,
             'unassigned': unassigned[0].unassigned

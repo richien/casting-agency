@@ -22,6 +22,6 @@ export const fetchMovies = () => dispatch => {
             dispatch(fetchMoviesSuccess(data));
         })
         .catch(error => {
-            dispatch(fetchMoviesFailure(error.message));
+            dispatch(fetchMoviesFailure(error.response.data));
         });
 };

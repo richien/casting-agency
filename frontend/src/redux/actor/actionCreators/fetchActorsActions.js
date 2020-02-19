@@ -37,7 +37,7 @@ export const fetchActors = () => {
             dispatch(fetchActorsSuccess(data))
         })
         .catch(error => {
-            dispatch(fetchActorsFailure(error))
+            dispatch(fetchActorsFailure(error.response.data))
         });
     }
 }

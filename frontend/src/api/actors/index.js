@@ -18,3 +18,16 @@ export const getActors = async () => {
             throw error;
         })
 }
+
+export const getActorTotals = async () => {
+    let url = endpoint + '/actors/totals';
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+    return await axios.get(url, {'headers': headers})
+        .then(response => response.data)
+        .catch(error => {
+            throw error
+        });
+}

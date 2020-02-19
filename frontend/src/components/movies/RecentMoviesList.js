@@ -13,7 +13,7 @@ function RecentMoviesList({fetchMovies, movies, loading}) {
     };
     useEffect(() => {
         fetchMovies();
-    }, []);
+    }, [fetchMovies]);
     return (
         <div>
             <header><h6>Recently Added Movies</h6></header>
